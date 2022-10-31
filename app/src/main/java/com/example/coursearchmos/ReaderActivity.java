@@ -18,4 +18,11 @@ public class ReaderActivity extends AppCompatActivity {
 		Intent intent = new Intent(this, LibraryActivity.class);
 		startActivity(intent);
 	}
+	public void StartSettingsActivity(View view) {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		startActivity(intent);
+	}
+	public void StayOnPage(View view) {
+		return;
+	}
 }

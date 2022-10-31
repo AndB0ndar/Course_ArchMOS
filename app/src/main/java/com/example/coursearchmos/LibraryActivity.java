@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 
 public class LibraryActivity extends AppCompatActivity {
 
@@ -17,5 +16,12 @@ public class LibraryActivity extends AppCompatActivity {
 	public void StartReaderActivity(View view) {
 		Intent intent = new Intent(this, ReaderActivity.class);
 		startActivity(intent);
+	}
+	public void StartSettingsActivity(View view) {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		startActivity(intent);
+	}
+	public void StayOnPage(View view) {
+		return;
 	}
 }

@@ -8,6 +8,7 @@
     tools:context=".ReaderActivity">
 
     <LinearLayout
+        android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="vertical">
@@ -26,6 +27,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/tail"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -39,8 +41,28 @@
             android:layout_marginHorizontal="20dp"
             android:layout_weight="1"
             android:minHeight="50dp"
+            android:onClick="StartSettingsActivity"
+            app:srcCompat="@drawable/ic_settings" />
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_weight="1"
+            android:minHeight="50dp"
+            android:onClick="StayOnPage"
+            app:srcCompat="@drawable/ic_reader" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_weight="1"
+            android:minHeight="50dp"
             android:onClick="StartLibraryActivity"
-            app:srcCompat="@drawable/ic_home_black_24dp" />
+            app:srcCompat="@drawable/ic_library" />
 
     </LinearLayout>
 
