@@ -24,6 +24,14 @@ tools:context=".SettingsActivity">
       android:textSize="25sp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:background="@color/black"
+      android:layout_marginHorizontal="10dp"/>
+
 </LinearLayout>
 
   <LinearLayout
@@ -32,6 +40,36 @@ tools:context=".SettingsActivity">
       android:orientation="vertical"
       android:layout_below="@+id/head"
       android:layout_above="@+id/tail">
+
+    <TextView
+        android:id="@+id/display_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/display_label"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:text="Яркость"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="25dp"/>
 
   </LinearLayout>
 
@@ -47,7 +85,7 @@ tools:context=".SettingsActivity">
       android:id="@+id/imageButton0"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginHorizontal="20dp"
+      android:layout_marginHorizontal="10dp"
       android:layout_weight="1"
       android:minHeight="50dp"
       android:onClick="StayOnPage"
@@ -57,7 +95,7 @@ tools:context=".SettingsActivity">
       android:id="@+id/imageButton1"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginHorizontal="20dp"
+      android:layout_marginHorizontal="10dp"
       android:layout_weight="1"
       android:minHeight="50dp"
       android:onClick="StartReaderActivity"
@@ -67,11 +105,21 @@ tools:context=".SettingsActivity">
       android:id="@+id/imageButton2"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginHorizontal="20dp"
+      android:layout_marginHorizontal="10dp"
       android:layout_weight="1"
       android:minHeight="50dp"
       android:onClick="StartLibraryActivity"
       app:srcCompat="@drawable/ic_library" />
+
+  <ImageButton
+      android:id="@+id/imageButton3"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="10dp"
+      android:layout_weight="1"
+      android:minHeight="50dp"
+      android:onClick="StartNotesActivity"
+      app:srcCompat="@drawable/ic_notes" />
 
 </LinearLayout>
 

@@ -32,21 +32,6 @@
         android:layout_below="@+id/head"
         android:layout_above="@+id/tail">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </TableLayout>
 
     <LinearLayout
@@ -61,7 +46,7 @@
             android:id="@+id/imageButton0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
             android:minHeight="50dp"
             android:onClick="StartSettingsActivity"
@@ -71,7 +56,7 @@
             android:id="@+id/imageButton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
             android:minHeight="50dp"
             android:onClick="StartReaderActivity"
@@ -81,11 +66,21 @@
             android:id="@+id/imageButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
             android:minHeight="50dp"
             android:onClick="StayOnPage"
             app:srcCompat="@drawable/ic_library" />
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:minHeight="50dp"
+            android:onClick="StartNotesActivity"
+            app:srcCompat="@drawable/ic_notes" />
 
     </LinearLayout>
 

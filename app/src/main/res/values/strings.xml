@@ -7,4 +7,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="reader_label">Последнее чтение</string>
     <string name="settings_label">Настройки</string>
+    <string name="display_label">Дисплей</string>
+    <string name="notes_label">Заметки</string>
 </resources>

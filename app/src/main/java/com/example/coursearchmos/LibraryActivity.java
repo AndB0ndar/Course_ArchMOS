@@ -22,6 +22,9 @@ public class LibraryActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 	public void StayOnPage(View view) {
-		return;
+	}
+	public void StartNotesActivity(View view) {
+		Intent intent = new Intent(this, NotesActivity.class);
+		startActivity(intent);
 	}
 }
