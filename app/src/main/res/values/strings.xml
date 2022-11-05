@@ -9,4 +9,6 @@
     <string name="settings_label">Настройки</string>
     <string name="display_label">Дисплей</string>
     <string name="notes_label">Заметки</string>
+    <string name="light_label">Яркость</string>
+    <string name="notes_test">note</string>
 </resources>
