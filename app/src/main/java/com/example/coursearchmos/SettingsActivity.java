@@ -1,6 +1,8 @@
 package com.example.coursearchmos;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceFragmentCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
     }
+
     public void StartLibraryActivity(View view) {
         Intent intent = new Intent(this, LibraryActivity.class);
         startActivity(intent);

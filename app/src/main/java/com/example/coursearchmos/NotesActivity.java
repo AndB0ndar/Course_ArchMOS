@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.coursearchmos.adapter.NoteAdapter;
+
 import java.util.LinkedList;
 import java.util.List;
 

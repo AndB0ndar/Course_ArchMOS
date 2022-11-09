@@ -1,9 +1,12 @@
 package com.example.coursearchmos;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 public class ReaderActivity extends AppCompatActivity {

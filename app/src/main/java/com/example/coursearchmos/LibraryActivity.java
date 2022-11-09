@@ -1,65 +1,45 @@
 package com.example.coursearchmos;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.coursearchmos.adapter.BookAdapter;
+import com.example.coursearchmos.model.Book;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class LibraryActivity extends AppCompatActivity {
-	private RecyclerView rvBook;
-	private static final int REQUEST_PERMISSION = 101;
+	RecyclerView libraryRecycler;
+	BookAdapter bookAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_library);
-		rvBook = findViewById(R.id.rv_books);
-		rvBook.setLayoutManager(new LinearLayoutManager(this));
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			// SDK_INT -> The SDK version of the software currently running on this hardware device
-			checkPermission();
-		} else {
-			generateList();
-		}
+		List<Book> bookList = new ArrayList<>();
+		bookList.add(new Book(0, "Евгений Онегин"));
+		bookList.add(new Book(1, "Мертвые души"));
+		bookList.add(new Book(2, "Война и мир"));
+		bookList.add(new Book(3, "Программирование"));
+
+		SetBookRecycler(bookList);
 	}
 
-	@TargetApi(Build.VERSION_CODES.M)
-	private void checkPermission() {  // request for permission
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-				== PackageManager.PERMISSION_GRANTED) {
-			generateList();
-		} else {
-			ActivityCompat.requestPermissions(this,
-					new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, REQUEST_PERMISSION);
-		}
-	}
+	private void SetBookRecycler(List<Book> bookList) {
+		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+		libraryRecycler = findViewById(R.id.libraryRecycler);
+		libraryRecycler.setLayoutManager(layoutManager);
 
-	@Override
-	public void onRequestPermissionsResult(int requestCode  // Getting the result of the request
-			,@NonNull String[] permissions
-			,@NonNull int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		if (requestCode == REQUEST_PERMISSION) {
-			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-				generateList();
-			}
-		}
-	}
-
-	private void generateList() {
-		return;
+		bookAdapter = new BookAdapter(this, bookList);
+		libraryRecycler.setAdapter(bookAdapter);
 	}
 
 	public void StartReaderActivity(View view) {
