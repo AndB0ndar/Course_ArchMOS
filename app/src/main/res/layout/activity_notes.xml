@@ -43,7 +43,7 @@ tools:context=".NotesActivity">
         android:padding="10dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notes_recycler_view"
+            android:id="@+id/notesRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

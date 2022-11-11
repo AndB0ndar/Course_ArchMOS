@@ -8,34 +8,34 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.coursearchmos.adapter.BookAdapter;
 import com.example.coursearchmos.adapter.NoteAdapter;
+import com.example.coursearchmos.model.Note;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotesActivity extends AppCompatActivity {
-
+	RecyclerView notesRecycler;
 	NoteAdapter noteAdapter;
-	static List<String> notes = new LinkedList<>();
+	static List<Note> notes = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_notes);
 
-		RecyclerView recyclerView = findViewById(R.id.notes_recycler_view);
-		recyclerView.setHasFixedSize(true);
-		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		noteAdapter = new NoteAdapter(notes);
-		recyclerView.setAdapter(noteAdapter);
-
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			notes.add(extras.getString("title"));
-			noteAdapter.notifyItemInserted(notes.size()-1);
-//			notes.add(extras.getString("text"));
-//			noteAdapter.notifyItemInserted(notes.size()-1);
+			Note note = new Note(notes.size()+1, extras.getString("title"), extras.getString("text"));
+			notes.add(note);
 		}
+		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+		notesRecycler = findViewById(R.id.notesRecycler);
+		notesRecycler.setLayoutManager(layoutManager);
+
+		noteAdapter = new NoteAdapter(this, notes);
+		notesRecycler.setAdapter(noteAdapter);
 	}
 	public void StartLibraryActivity(View view) {
 		Intent intent = new Intent(this, LibraryActivity.class);

@@ -24,13 +24,13 @@ public class LibraryActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_library);
 
-		List<Book> bookList = new ArrayList<>();
-		bookList.add(new Book(0, "Евгений Онегин"));
-		bookList.add(new Book(1, "Мертвые души"));
-		bookList.add(new Book(2, "Война и мир"));
-		bookList.add(new Book(3, "Программирование"));
+		List<Book> books = new ArrayList<>();
+		books.add(new Book(0, "Евгений Онегин"));
+		books.add(new Book(1, "Мертвые души"));
+		books.add(new Book(2, "Война и мир"));
+		books.add(new Book(3, "Программирование"));
 
-		SetBookRecycler(bookList);
+		SetBookRecycler(books);
 	}
 
 	private void SetBookRecycler(List<Book> bookList) {

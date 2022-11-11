@@ -1,58 +1,66 @@
 package com.example.coursearchmos.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.coursearchmos.AddNoteActivity;
+import com.example.coursearchmos.BookActivity;
+import com.example.coursearchmos.NoteActivity;
 import com.example.coursearchmos.R;
+import com.example.coursearchmos.model.Note;
 
 import java.util.List;
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteVH> {
-	List<String> notes;
+public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
+	Context context;
+	List<Note> notes;
 
-	public NoteAdapter(List<String> notes) {
+	public NoteAdapter(Context context, List<Note> notes) {
+		this.context = context;
 		this.notes = notes;
 	}
 
 	@NonNull
 	@Override
-	public NoteVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.node, parent, false);
-		return new NoteVH(view).LinkAdapter(this);
+	public BookAdapter.BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+		View bookItem = LayoutInflater.from(context).inflate(R.layout.note_item, parent, false);
+		return new BookAdapter.BookViewHolder(bookItem);
 	}
 
 	@Override
-	public void onBindViewHolder(@NonNull NoteVH holder, int position) {
-		 holder.textView.setText(notes.get(position));
+	public void onBindViewHolder(@NonNull BookAdapter.BookViewHolder holder, int position) {
+		holder.bookTitle.setText(notes.get(position).getTitle());
+		holder.itemView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(context, NoteActivity.class);
+				context.startActivity(intent);
+			}
+		});
 	}
+
 
 	@Override
 	public int getItemCount() {
 		return notes.size();
 	}
-}
 
-class NoteVH extends RecyclerView.ViewHolder {
-	TextView textView;
-	private NoteAdapter adapter;
+	private static final class NoteViewHolder extends RecyclerView.ViewHolder {
+		TextView noteTitle;
 
-	public NoteVH(@NonNull View itemView) {
-		super(itemView);
-		textView = itemView.findViewById(R.id.text);
-		itemView.findViewById(R.id.info).setOnClickListener(view -> {
-			int pos = getAdapterPosition();
-			adapter.notes.remove(pos);
-			adapter.notifyItemRemoved(pos);
-		});
+		public NoteViewHolder(@NonNull View itemView) {
+			super(itemView);
+
+			noteTitle = itemView.findViewById(R.id.title);
+		}
 	}
 
-	public NoteVH LinkAdapter(NoteAdapter adapter) {
-		this.adapter = adapter;
-		return this;
-	}
 }
