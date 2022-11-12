@@ -1,14 +1,13 @@
 <resources>
     <string name="app_name">CourseArchMOS</string>
-    <string name="library_label">Библиотека</string>
     <string name="title_activity_reader">Reader</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="reader_label">Последнее чтение</string>
-    <string name="settings_label">Настройки</string>
+
+    <string name="title_setting">Настройки</string>
+    <string name="title_reader">Последнее чтение</string>
+    <string name="title_library">Библиотека</string>
+    <string name="title_notes">Заметки</string>
+
     <string name="display_label">Дисплей</string>
-    <string name="notes_label">Заметки</string>
     <string name="light_label">Яркость</string>
     <string name="notes_test">note</string>
     <string name="title_activity_tmp">tmp</string>
@@ -30,4 +29,7 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
