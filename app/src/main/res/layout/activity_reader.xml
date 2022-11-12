@@ -34,6 +34,68 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:layout_above="@+id/tail"
+        android:layout_below="@+id/head"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/book_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent">
+            <ImageButton
+                android:id="@+id/book_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_book"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Название:"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/book_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Автор:"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/book_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/tail"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -42,44 +104,48 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/imageButton0"
+            android:id="@+id/btn_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
             android:minHeight="50dp"
-            android:onClick="StartSettingsActivity"
-            app:srcCompat="@drawable/ic_settings" />
+            app:srcCompat="@drawable/ic_settings"
+            android:background="@android:color/transparent"
+            app:tint="@color/white" />
 
         <ImageButton
-            android:id="@+id/imageButton1"
+            android:id="@+id/btn_reader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
             android:minHeight="50dp"
-            android:onClick="StayOnPage"
-            app:srcCompat="@drawable/ic_reader" />
+            app:srcCompat="@drawable/ic_reader"
+            android:background="@android:color/transparent"
+            app:tint="@color/white"/>
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/btn_library"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
             android:minHeight="50dp"
-            android:onClick="StartLibraryActivity"
-            app:srcCompat="@drawable/ic_library" />
+            app:srcCompat="@drawable/ic_library"
+            android:background="@android:color/transparent"
+            app:tint="@color/white"/>
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/btn_notes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
             android:minHeight="50dp"
-            android:onClick="StartNotesActivity"
-            app:srcCompat="@drawable/ic_notes" />
+            app:srcCompat="@drawable/ic_notes"
+            android:background="@android:color/transparent"
+            app:tint="@color/white" />
 
     </LinearLayout>
 

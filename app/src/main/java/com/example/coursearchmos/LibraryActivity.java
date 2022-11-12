@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.coursearchmos.adapter.BookAdapter;
+import com.example.coursearchmos.databinding.ActivityLibraryBinding;
 import com.example.coursearchmos.model.Book;
 
 import java.util.ArrayList;
@@ -16,26 +17,47 @@ import java.util.List;
 
 
 public class LibraryActivity extends AppCompatActivity {
+	private ActivityLibraryBinding binding;
 	RecyclerView libraryRecycler;
 	BookAdapter bookAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_library);
+		binding = ActivityLibraryBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
 		List<Book> books = new ArrayList<>();
-		books.add(new Book(0, "Евгений Онегин"));
-		books.add(new Book(1, "Мертвые души"));
-		books.add(new Book(2, "Война и мир"));
-		books.add(new Book(3, "Программирование"));
+		books.add(new Book(0, "Евгений Онегин", "Пушкин"));
+		books.add(new Book(1, "Мертвые души", "Гоголь"));
+		books.add(new Book(2, "Война и мир", "Толстой"));
+		books.add(new Book(3, "Программирование", "Я"));
 
 		SetBookRecycler(books);
+
+		binding.btnSetting.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				StartSettingsActivity(v);
+			}
+		});
+		binding.btnReader.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				StartReaderActivity(v);
+			}
+		});
+		binding.btnNotes.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				StartNotesActivity(v);
+			}
+		});
 	}
 
 	private void SetBookRecycler(List<Book> bookList) {
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-		libraryRecycler = findViewById(R.id.libraryRecycler);
+		libraryRecycler = binding.libraryRecycler;
 		libraryRecycler.setLayoutManager(layoutManager);
 
 		bookAdapter = new BookAdapter(this, bookList);
@@ -49,8 +71,6 @@ public class LibraryActivity extends AppCompatActivity {
 	public void StartSettingsActivity(View view) {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
-	}
-	public void StayOnPage(View view) {
 	}
 	public void StartNotesActivity(View view) {
 		Intent intent = new Intent(this, NotesActivity.class);

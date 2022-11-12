@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursearchmos.BookActivity;
 import com.example.coursearchmos.R;
+import com.example.coursearchmos.data.CurrentReadBook;
 import com.example.coursearchmos.model.Book;
 
 import java.util.List;
@@ -37,11 +38,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 	@Override
 	public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
 		holder.bookTitle.setText(books.get(position).getTitle());
+		holder.bookAuthor.setText(books.get(position).getAuthor());
 
 		holder.itemView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context, BookActivity.class);
+				CurrentReadBook.setBook(books.get(holder.getAdapterPosition()));
 				context.startActivity(intent);
 			}
 		});
@@ -55,13 +58,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 	public static final class BookViewHolder extends RecyclerView.ViewHolder {
 
 		ImageView bookImage;
-		TextView bookTitle;
+		TextView bookTitle, bookAuthor;
 
 		public BookViewHolder(@NonNull View itemView) {
 			super(itemView);
 
 			bookImage = itemView.findViewById(R.id.image);
 			bookTitle = itemView.findViewById(R.id.title);
+			bookAuthor = itemView.findViewById(R.id.author);
 		}
 	}
 }

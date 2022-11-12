@@ -2,12 +2,15 @@ package com.example.coursearchmos.model;
 
 public class Book {
 	int id;
-	String title, author;
+	String title;
+	String author;
+	String year;
 	String path;
 
-	public Book(int id, String title) {
+	public Book(int id, String title, String author) {
 		this.id = id;
 		this.title = title;
+		this.author = author;
 	}
 
 	public int getId() {
@@ -32,6 +35,14 @@ public class Book {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 	public String getPath() {

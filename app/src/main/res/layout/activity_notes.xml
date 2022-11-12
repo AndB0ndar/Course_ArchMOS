@@ -51,7 +51,7 @@ tools:context=".NotesActivity">
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add"
+        android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tail"
@@ -60,7 +60,6 @@ tools:context=".NotesActivity">
         android:layout_marginBottom="60dp"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="AddNote"
         app:backgroundTint="@color/background"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_menu_add" />
@@ -75,44 +74,48 @@ tools:context=".NotesActivity">
     android:orientation="horizontal">
 
     <ImageButton
-        android:id="@+id/imageButton0"
+        android:id="@+id/btn_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_weight="1"
         android:minHeight="50dp"
-        android:onClick="StartSettingsActivity"
-        app:srcCompat="@drawable/ic_settings" />
+        app:srcCompat="@drawable/ic_settings"
+        android:background="@android:color/transparent"
+        app:tint="@color/white" />
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/btn_reader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_weight="1"
         android:minHeight="50dp"
-        android:onClick="StartReaderActivity"
-        app:srcCompat="@drawable/ic_reader" />
+        app:srcCompat="@drawable/ic_reader"
+        android:background="@android:color/transparent"
+        app:tint="@color/white" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/btn_library"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_weight="1"
         android:minHeight="50dp"
-        android:onClick="StartLibraryActivity"
-        app:srcCompat="@drawable/ic_library" />
+        app:srcCompat="@drawable/ic_library"
+        android:background="@android:color/transparent"
+        app:tint="@color/white" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/btn_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_weight="1"
         android:minHeight="50dp"
-        android:onClick="StayOnPage"
-        app:srcCompat="@drawable/ic_notes" />
+        app:srcCompat="@drawable/ic_notes"
+        android:background="@android:color/transparent"
+        app:tint="@color/white" />
 
 </LinearLayout>
 

@@ -10,20 +10,23 @@ import android.view.View;
 
 import com.example.coursearchmos.adapter.BookAdapter;
 import com.example.coursearchmos.adapter.NoteAdapter;
+import com.example.coursearchmos.databinding.ActivityLibraryBinding;
+import com.example.coursearchmos.databinding.ActivityNotesBinding;
 import com.example.coursearchmos.model.Note;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotesActivity extends AppCompatActivity {
-	RecyclerView notesRecycler;
-	NoteAdapter noteAdapter;
+	private ActivityNotesBinding binding;
+	private NoteAdapter noteAdapter;
 	static List<Note> notes = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_notes);
+		binding = ActivityNotesBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -31,11 +34,35 @@ public class NotesActivity extends AppCompatActivity {
 			notes.add(note);
 		}
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-		notesRecycler = findViewById(R.id.notesRecycler);
-		notesRecycler.setLayoutManager(layoutManager);
+		binding.notesRecycler.setLayoutManager(layoutManager);
 
 		noteAdapter = new NoteAdapter(this, notes);
-		notesRecycler.setAdapter(noteAdapter);
+		binding.notesRecycler.setAdapter(noteAdapter);
+
+		binding.btnSetting.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				StartSettingsActivity(v);
+			}
+		});
+		binding.btnReader.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				StartReaderActivity(v);
+			}
+		});
+		binding.btnLibrary.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				StartLibraryActivity(v);
+			}
+		});
+		binding.btnAdd.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AddNote(v);
+			}
+		});
 	}
 	public void StartLibraryActivity(View view) {
 		Intent intent = new Intent(this, LibraryActivity.class);
@@ -45,14 +72,10 @@ public class NotesActivity extends AppCompatActivity {
 		Intent intent = new Intent(this, ReaderActivity.class);
 		startActivity(intent);
 	}
-	public void StayOnPage(View view) {
-	}
-
 	public void StartSettingsActivity(View view) {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
-
 	public void AddNote(View view) {
 		Intent intent = new Intent(this, AddNoteActivity.class);
 		startActivity(intent);
