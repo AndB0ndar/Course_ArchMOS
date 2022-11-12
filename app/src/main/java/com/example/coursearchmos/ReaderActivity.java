@@ -1,16 +1,11 @@
 package com.example.coursearchmos;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.example.coursearchmos.data.CurrentReadBook;
-import com.example.coursearchmos.databinding.ActivityLibraryBinding;
 import com.example.coursearchmos.databinding.ActivityReaderBinding;
 import com.example.coursearchmos.model.Book;
 
@@ -25,14 +20,16 @@ public class ReaderActivity extends AppCompatActivity {
 		setContentView(binding.getRoot());
 
 		// TODO: when there is no current book to read
-		book = CurrentReadBook.getBook();
-		if (book != null) {
+		Bundle args = getIntent().getExtras();
+		if (args != null) {
+			book = args.getParcelable(Book.class.getCanonicalName());
 			binding.bookTitle.setText(book.getTitle());
 			binding.bookAuthor.setText(book.getAuthor());
 			binding.bookImage.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(v.getContext(), BookActivity.class);
+					intent.putExtra(Book.class.getCanonicalName(), book);
 					v.getContext().startActivity(intent);
 				}
 			});

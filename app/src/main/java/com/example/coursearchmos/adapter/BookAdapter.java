@@ -2,7 +2,6 @@ package com.example.coursearchmos.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursearchmos.BookActivity;
 import com.example.coursearchmos.R;
-import com.example.coursearchmos.data.CurrentReadBook;
 import com.example.coursearchmos.model.Book;
 
 import java.util.List;
@@ -44,7 +42,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context, BookActivity.class);
-				CurrentReadBook.setBook(books.get(holder.getAdapterPosition()));
+				intent.putExtra(Book.class.getCanonicalName(), books.get(holder.getAdapterPosition()));
 				context.startActivity(intent);
 			}
 		});
