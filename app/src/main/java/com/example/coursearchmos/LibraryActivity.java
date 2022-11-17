@@ -18,8 +18,7 @@ import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
 	private ActivityLibraryBinding binding;
-	RecyclerView libraryRecycler;
-	BookAdapter bookAdapter;
+	protected BookAdapter bookAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +56,10 @@ public class LibraryActivity extends AppCompatActivity {
 
 	private void SetBookRecycler(List<Book> bookList) {
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-		libraryRecycler = binding.libraryRecycler;
-		libraryRecycler.setLayoutManager(layoutManager);
+		binding.libraryRecycler.setLayoutManager(layoutManager);
 
 		bookAdapter = new BookAdapter(this, bookList);
-		libraryRecycler.setAdapter(bookAdapter);
+		binding.libraryRecycler.setAdapter(bookAdapter);
 	}
 
 	public void StartReaderActivity(View view) {

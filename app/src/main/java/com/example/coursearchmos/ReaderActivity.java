@@ -1,17 +1,24 @@
 package com.example.coursearchmos;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.coursearchmos.adapter.BookAdapter;
 import com.example.coursearchmos.databinding.ActivityReaderBinding;
 import com.example.coursearchmos.model.Book;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReaderActivity extends AppCompatActivity {
 	private ActivityReaderBinding binding;
-	static private Book book;
+	protected BookAdapter bookAdapter;
+	static private Book book = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +30,9 @@ public class ReaderActivity extends AppCompatActivity {
 		Bundle args = getIntent().getExtras();
 		if (args != null) {
 			book = args.getParcelable(Book.class.getCanonicalName());
-			binding.bookTitle.setText(book.getTitle());
-			binding.bookAuthor.setText(book.getAuthor());
-			binding.bookImage.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(v.getContext(), BookActivity.class);
-					intent.putExtra(Book.class.getCanonicalName(), book);
-					v.getContext().startActivity(intent);
-				}
-			});
+		}
+		if (book != null) {
+			SetBookRecycler(book);
 		}
 
 		binding.btnSetting.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +53,16 @@ public class ReaderActivity extends AppCompatActivity {
 				StartNotesActivity(v);
 			}
 		});
+	}
+
+	private void SetBookRecycler(Book book) {
+		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+		binding.readerRecycler.setLayoutManager(layoutManager);
+
+		List<Book> books = new ArrayList<>();
+		books.add(book);
+		bookAdapter = new BookAdapter(this, books);
+		binding.readerRecycler.setAdapter(bookAdapter);
 	}
 
 	public void StartLibraryActivity(View view) {

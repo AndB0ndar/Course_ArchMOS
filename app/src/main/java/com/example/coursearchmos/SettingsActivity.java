@@ -41,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
                         changeWriteSettingsPermission(context);
                     }
                 } else {
+                    // TODO: make the change more proportional
                     SetBrightness(context, progress);
                 }
             }
