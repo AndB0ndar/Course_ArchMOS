@@ -26,7 +26,6 @@ public class ReaderActivity extends AppCompatActivity {
 		binding = ActivityReaderBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		// TODO: when there is no current book to read
 		Bundle args = getIntent().getExtras();
 		if (args != null) {
 			book = args.getParcelable(Book.class.getCanonicalName());

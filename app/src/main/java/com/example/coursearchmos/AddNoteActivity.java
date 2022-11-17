@@ -7,20 +7,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.coursearchmos.databinding.ActivityAddNoteBinding;
+import com.example.coursearchmos.databinding.ActivityNotesBinding;
+
 public class AddNoteActivity extends AppCompatActivity {
-	EditText title;
-	EditText text;
+	private ActivityAddNoteBinding binding;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_note);
-		title = findViewById(R.id.title);
-		text = findViewById(R.id.text);
-	}
+		binding = ActivityAddNoteBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
-	public void Save(View view) {
-		GoBack(title.getText().toString(), text.getText().toString());
+		binding.saveButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				GoBack(binding.title.getText().toString(), binding.text.getText().toString());
+			}
+		});
 	}
 
 	private void GoBack(String title, String text) {

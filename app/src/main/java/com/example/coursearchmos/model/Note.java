@@ -1,22 +1,34 @@
 package com.example.coursearchmos.model;
 
-public class Note {
-	int id;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Note implements Parcelable {
 	String title, text;
 
-	public Note(int id, String title, String text) {
-		this.id = id;
+	public Note(String title, String text) {
 		this.title = title;
 		this.text = text;
 	}
 
-	public int getId() {
-		return id;
+	protected Note(Parcel in) {
+		title = in.readString();
+		text = in.readString();
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
+	public static final Creator<Note> CREATOR = new Creator<Note>() {
+		@Override
+		public Note createFromParcel(Parcel in) {
+			return new Note(in);
+		}
+
+		@Override
+		public Note[] newArray(int size) {
+			return new Note[size];
+		}
+	};
 
 	public String getTitle() {
 		return title;
@@ -32,5 +44,16 @@ public class Note {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(@NonNull Parcel dest, int flags) {
+		dest.writeString(title);
+		dest.writeString(text);
 	}
 }

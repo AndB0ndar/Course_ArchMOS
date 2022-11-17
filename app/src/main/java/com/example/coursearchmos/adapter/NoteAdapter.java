@@ -15,6 +15,7 @@ import com.example.coursearchmos.AddNoteActivity;
 import com.example.coursearchmos.BookActivity;
 import com.example.coursearchmos.NoteActivity;
 import com.example.coursearchmos.R;
+import com.example.coursearchmos.model.Book;
 import com.example.coursearchmos.model.Note;
 
 import java.util.List;
@@ -42,11 +43,12 @@ public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context, NoteActivity.class);
+				intent.putExtra(Note.class.getCanonicalName(), notes.get(holder.getAdapterPosition()));
+				intent.putExtra("id", holder.getAdapterPosition());
 				context.startActivity(intent);
 			}
 		});
 	}
-
 
 	@Override
 	public int getItemCount() {
@@ -62,5 +64,4 @@ public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 			noteTitle = itemView.findViewById(R.id.title);
 		}
 	}
-
 }

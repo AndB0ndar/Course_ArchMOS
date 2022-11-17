@@ -19,7 +19,7 @@ import java.util.List;
 
 public class NotesActivity extends AppCompatActivity {
 	private ActivityNotesBinding binding;
-	private NoteAdapter noteAdapter;
+	protected NoteAdapter noteAdapter;
 	static List<Note> notes = new ArrayList<>();
 
 	@Override
@@ -30,8 +30,21 @@ public class NotesActivity extends AppCompatActivity {
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			Note note = new Note(notes.size()+1, extras.getString("title"), extras.getString("text"));
-			notes.add(note);
+			int id = extras.getInt("id", -1);
+			if (id != -1) {
+				if (extras.getBoolean("remove", false))
+					notes.remove(id);
+				else {
+					notes.remove(id);
+					String title = extras.getString("title");
+					String text = extras.getString("text");
+					Note note = new Note(extras.getString("title"), extras.getString("text"));
+					notes.add(note);
+				}
+			} else {
+				Note note = new Note(extras.getString("title"), extras.getString("text"));
+				notes.add(note);
+			}
 		}
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
 		binding.notesRecycler.setLayoutManager(layoutManager);
