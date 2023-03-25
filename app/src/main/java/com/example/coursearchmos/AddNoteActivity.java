@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import com.example.coursearchmos.databinding.ActivityAddNoteBinding;
-import com.example.coursearchmos.databinding.ActivityNotesBinding;
+import com.example.coursearchmos.model.NoteModel;
 
 public class AddNoteActivity extends AppCompatActivity {
+	public static final String CREATE_MODEL = "CREATE_MODEL";
 	private ActivityAddNoteBinding binding;
 
 	@Override
@@ -22,15 +22,17 @@ public class AddNoteActivity extends AppCompatActivity {
 		binding.saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				GoBack(binding.title.getText().toString(), binding.text.getText().toString());
+				saveAndBack(binding.title.getText().toString().trim()
+						, binding.text.getText().toString()
+				);
 			}
 		});
 	}
 
-	private void GoBack(String title, String text) {
+	private void saveAndBack(String title, String text) {
 		Intent intent = new Intent(this, NotesActivity.class);
-		intent.putExtra("title", title);
-		intent.putExtra("text", text);
+		NoteModel noteModel = new NoteModel(-1, title, text);
+		intent.putExtra(CREATE_MODEL, noteModel);
 		startActivity(intent);
 	}
 }

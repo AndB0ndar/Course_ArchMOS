@@ -2,20 +2,18 @@ package com.example.coursearchmos;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.coursearchmos.databinding.ActivityBookBinding;
 import com.example.coursearchmos.databinding.ActivityNoteBinding;
-import com.example.coursearchmos.databinding.ActivityNotesBinding;
-import com.example.coursearchmos.model.Book;
-import com.example.coursearchmos.model.Note;
+import com.example.coursearchmos.model.NoteModel;
 
 public class NoteActivity extends AppCompatActivity {
+	public static final String UPDATE_MODEL = "NoteActivity.UPDATE_MODEL";
+	public static final String REMOVE_MODEL = "NoteActivity.REMOVE_MODEL";
 	private ActivityNoteBinding binding;
-	private int id;
+	private NoteModel noteModel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +23,9 @@ public class NoteActivity extends AppCompatActivity {
 
 		Bundle args = getIntent().getExtras();
 		if (args != null) {
-			Note note = args.getParcelable(Note.class.getCanonicalName());
-			id = args.getInt("id");
-			binding.title.setText(note.getTitle());
-			binding.text.setText(note.getText());
+			noteModel = (NoteModel) args.getSerializable(NoteModel.class.getCanonicalName());
+			binding.title.setText(noteModel.getTitle());
+			binding.text.setText(noteModel.getText());
 		} else {
 			GoBack();
 		}
@@ -55,16 +52,15 @@ public class NoteActivity extends AppCompatActivity {
 
 	private void Save(String title, String text) {
 		Intent intent = new Intent(this, NotesActivity.class);
-		intent.putExtra("id", id);
-		intent.putExtra("title", title);
-		intent.putExtra("text", text);
+		noteModel.setTitle(title);
+		noteModel.setText(text);
+		intent.putExtra(UPDATE_MODEL, noteModel);
 		startActivity(intent);
 	}
 
 	private void Remove() {
 		Intent intent = new Intent(this, NotesActivity.class);
-		intent.putExtra("remove", true);
-		intent.putExtra("id", id);
+		intent.putExtra(REMOVE_MODEL, noteModel);
 		startActivity(intent);
 	}
 }

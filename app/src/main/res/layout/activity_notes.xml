@@ -60,7 +60,7 @@ tools:context=".NotesActivity">
         android:layout_marginBottom="60dp"
         android:clickable="true"
         android:focusable="true"
-        app:backgroundTint="@color/background"
+        android:background="@color/purple_200"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_menu_add" />
 

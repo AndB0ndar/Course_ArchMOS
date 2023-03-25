@@ -5,31 +5,26 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.coursearchmos.AddNoteActivity;
-import com.example.coursearchmos.BookActivity;
 import com.example.coursearchmos.NoteActivity;
 import com.example.coursearchmos.R;
-import com.example.coursearchmos.model.Book;
-import com.example.coursearchmos.model.Note;
+import com.example.coursearchmos.model.NoteModel;
 
 import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
-	Context context;
-	List<Note> notes;
+	private Context context;
+	private List<NoteModel> notes;
 
-	public NoteAdapter(Context context, List<Note> notes) {
+	public NoteAdapter(Context context, List<NoteModel> notes) {
 		this.context = context;
 		this.notes = notes;
 	}
 
-	@NonNull
 	@Override
 	public BookAdapter.BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View bookItem = LayoutInflater.from(context).inflate(R.layout.note_item, parent, false);
@@ -37,14 +32,13 @@ public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 	}
 
 	@Override
-	public void onBindViewHolder(@NonNull BookAdapter.BookViewHolder holder, int position) {
+	public void onBindViewHolder(BookAdapter.BookViewHolder holder, int position) {
 		holder.bookTitle.setText(notes.get(position).getTitle());
 		holder.itemView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context, NoteActivity.class);
-				intent.putExtra(Note.class.getCanonicalName(), notes.get(holder.getAdapterPosition()));
-				intent.putExtra("id", holder.getAdapterPosition());
+				intent.putExtra(NoteModel.class.getCanonicalName(), notes.get(holder.getAdapterPosition()));
 				context.startActivity(intent);
 			}
 		});

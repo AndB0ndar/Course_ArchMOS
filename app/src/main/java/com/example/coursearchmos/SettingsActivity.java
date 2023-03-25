@@ -1,7 +1,5 @@
 package com.example.coursearchmos;
 
-import static java.lang.Math.round;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,10 +38,9 @@ public class SettingsActivity extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         changeWriteSettingsPermission(context);
                     }
-                } else {
-                    // TODO: make the change more proportional
-                    SetBrightness(context, progress);
                 }
+                // TODO: make the change more proportional
+                SetBrightness(context, progress);
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -87,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     // Start can modify system settings panel to let user change the write
     // settings permission.
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    @RequiresApi(Build.VERSION_CODES.M)
     private void changeWriteSettingsPermission(Context context) {
         Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
         context.startActivity(intent);
