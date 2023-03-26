@@ -25,6 +25,7 @@ public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 		this.notes = notes;
 	}
 
+	@NonNull
 	@Override
 	public BookAdapter.BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View bookItem = LayoutInflater.from(context).inflate(R.layout.note_item, parent, false);
@@ -38,7 +39,9 @@ public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context, NoteActivity.class);
-				intent.putExtra(NoteModel.class.getCanonicalName(), notes.get(holder.getAdapterPosition()));
+				intent.putExtra(NoteModel.class.getCanonicalName()
+						, notes.get(holder.getAdapterPosition()).getId()
+				);
 				context.startActivity(intent);
 			}
 		});

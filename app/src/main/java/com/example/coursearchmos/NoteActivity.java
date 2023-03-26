@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.coursearchmos.DataBase.NoteDBHelper;
 import com.example.coursearchmos.databinding.ActivityNoteBinding;
 import com.example.coursearchmos.model.NoteModel;
 
 public class NoteActivity extends AppCompatActivity {
-	public static final String UPDATE_MODEL = "NoteActivity.UPDATE_MODEL";
-	public static final String REMOVE_MODEL = "NoteActivity.REMOVE_MODEL";
 	private ActivityNoteBinding binding;
+	private NoteDBHelper noteDBHelper;
 	private NoteModel noteModel;
 
 	@Override
@@ -21,9 +21,13 @@ public class NoteActivity extends AppCompatActivity {
 		binding = ActivityNoteBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
+		noteDBHelper = new NoteDBHelper(NoteActivity.this);
+
 		Bundle args = getIntent().getExtras();
 		if (args != null) {
-			noteModel = (NoteModel) args.getSerializable(NoteModel.class.getCanonicalName());
+			noteModel = noteDBHelper.getById(args.getInt(NoteModel.class.getCanonicalName()));
+			// what is better to pass through the intent object or object id and get it from the database?
+//			noteModel = (NoteModel) args.getSerializable(NoteModel.class.getCanonicalName());
 			binding.title.setText(noteModel.getTitle());
 			binding.text.setText(noteModel.getText());
 		} else {
@@ -36,7 +40,6 @@ public class NoteActivity extends AppCompatActivity {
 				Save(binding.title.getText().toString(), binding.text.getText().toString());
 			}
 		});
-
 		binding.removeButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -51,16 +54,25 @@ public class NoteActivity extends AppCompatActivity {
 	}
 
 	private void Save(String title, String text) {
-		Intent intent = new Intent(this, NotesActivity.class);
 		noteModel.setTitle(title);
 		noteModel.setText(text);
-		intent.putExtra(UPDATE_MODEL, noteModel);
+		noteDBHelper.updateOne(noteModel);
+
+		Intent intent = new Intent(this, NotesActivity.class);
 		startActivity(intent);
 	}
 
 	private void Remove() {
+		noteDBHelper.deleteOne(noteModel);
+
 		Intent intent = new Intent(this, NotesActivity.class);
-		intent.putExtra(REMOVE_MODEL, noteModel);
 		startActivity(intent);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		noteDBHelper.close();
 	}
 }

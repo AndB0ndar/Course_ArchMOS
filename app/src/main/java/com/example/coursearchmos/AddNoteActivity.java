@@ -6,18 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.coursearchmos.DataBase.NoteDBHelper;
 import com.example.coursearchmos.databinding.ActivityAddNoteBinding;
 import com.example.coursearchmos.model.NoteModel;
 
 public class AddNoteActivity extends AppCompatActivity {
-	public static final String CREATE_MODEL = "CREATE_MODEL";
 	private ActivityAddNoteBinding binding;
+	private NoteDBHelper noteDBHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		binding = ActivityAddNoteBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
+
+		noteDBHelper = new NoteDBHelper(AddNoteActivity.this);
 
 		binding.saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -30,9 +33,17 @@ public class AddNoteActivity extends AppCompatActivity {
 	}
 
 	private void saveAndBack(String title, String text) {
-		Intent intent = new Intent(this, NotesActivity.class);
 		NoteModel noteModel = new NoteModel(-1, title, text);
-		intent.putExtra(CREATE_MODEL, noteModel);
+		noteDBHelper.addOne(noteModel);
+
+		Intent intent = new Intent(this, NotesActivity.class);
 		startActivity(intent);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		noteDBHelper.close();
 	}
 }

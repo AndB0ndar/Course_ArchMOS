@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.coursearchmos.DataBase.DataBaseHelper;
+import com.example.coursearchmos.DataBase.NoteDBHelper;
 import com.example.coursearchmos.adapter.NoteAdapter;
 import com.example.coursearchmos.databinding.ActivityNotesBinding;
 import com.example.coursearchmos.model.NoteModel;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class NotesActivity extends AppCompatActivity {
 	private ActivityNotesBinding binding;
-	private DataBaseHelper dataBaseHelper;
+	private NoteDBHelper noteDBHelper;
 	protected NoteAdapter noteAdapter;
 	static List<NoteModel> notes = new ArrayList<>();
 
@@ -28,24 +28,8 @@ public class NotesActivity extends AppCompatActivity {
 		binding = ActivityNotesBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		dataBaseHelper = new DataBaseHelper(NotesActivity.this);
-
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			if (extras.containsKey(AddNoteActivity.CREATE_MODEL)) {
-				NoteModel noteModel = (NoteModel) extras.getSerializable(AddNoteActivity.CREATE_MODEL);
-				dataBaseHelper.addOne(noteModel);
-			}
-			if (extras.containsKey(NoteActivity.REMOVE_MODEL)) {
-				NoteModel noteModel = (NoteModel) extras.getSerializable(NoteActivity.REMOVE_MODEL);
-				dataBaseHelper.deleteOne(noteModel);
-			}
-			if (extras.containsKey(NoteActivity.UPDATE_MODEL)) {
-				NoteModel noteModel = (NoteModel) extras.getSerializable(NoteActivity.UPDATE_MODEL);
-				dataBaseHelper.updateOne(noteModel);
-			}
-		}
-		notes = dataBaseHelper.getAll();
+		noteDBHelper = new NoteDBHelper(NotesActivity.this);
+		notes = noteDBHelper.getAll();
 
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
 				, RecyclerView.VERTICAL
@@ -102,5 +86,12 @@ public class NotesActivity extends AppCompatActivity {
 	public void AddNote(View view) {
 		Intent intent = new Intent(this, AddNoteActivity.class);
 		startActivity(intent);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		noteDBHelper.close();
 	}
 }

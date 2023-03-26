@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DataBaseHelper extends SQLiteOpenHelper {
+public class NoteDBHelper extends SQLiteOpenHelper {
 
 	public static final String NOTE_TABLE = "NOTE_TABLE";
 	public static final String COLUMN_NOTE_TITLE = "NOTE_TITLE";
 	public static final String COLUMN_NOTE_TEXT = "NOTE_TEXT";
 	public static final String COLUMN_ID = "ID";
 
-	public DataBaseHelper(Context context) {
+	public NoteDBHelper(Context context) {
 		super(context, "note.db", null, 1);
 	}
 
@@ -47,6 +47,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		cv.put(COLUMN_NOTE_TEXT, noteModel.getText());
 
 		long insert = db.insert(NOTE_TABLE, null, cv);
+		db.close();
 		return insert != -1;
 	}
 
@@ -66,6 +67,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		cv.put(COLUMN_NOTE_TEXT, noteModel.getText());
 
 		db.update(NOTE_TABLE, cv, "id = ?", new String[]{String.valueOf(noteModel.getId())});
+		db.close();
 		return true;
 	}
 
@@ -85,12 +87,31 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 				NoteModel noteModel = new NoteModel(noteID, noteTITLE, noteTEXT);
 				returnList.add(noteModel);
 			} while (cursor.moveToNext());
-		} else {
-			// failure
 		}
+
 		cursor.close();
 		db.close();
 
 		return returnList;
+	}
+
+	public NoteModel getById(int id) {
+		NoteModel noteModel = null;
+
+		String queryString = "SELECT * FROM " + NOTE_TABLE + " WHERE " + COLUMN_ID + " = " + id;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(queryString, null);
+		if (cursor.moveToFirst()){
+			int noteID = cursor.getInt(0);
+			String noteTITLE = cursor.getString(1);
+			String noteTEXT = cursor.getString(2);
+
+			noteModel = new NoteModel(noteID, noteTITLE, noteTEXT);
+		}
+
+		cursor.close();
+		db.close();
+
+		return noteModel;
 	}
 }
