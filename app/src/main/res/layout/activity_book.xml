@@ -36,10 +36,11 @@
             android:src="@drawable/ic_menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageView"
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfViewer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/screenshot_from_2022_11_26_17_32_51" />
+        android:layout_height="match_parent" >
+
+    </com.github.barteksc.pdfviewer.PDFView>
 
 </LinearLayout>
