@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.coursearchmos.databinding.ActivityBookBinding;
 import com.example.coursearchmos.model.Book;
+import com.github.barteksc.pdfviewer.PDFView;
 
 public class BookActivity extends AppCompatActivity {
 	private ActivityBookBinding binding;
@@ -23,6 +25,9 @@ public class BookActivity extends AppCompatActivity {
 
 		Bundle args = getIntent().getExtras();
 		book = args.getParcelable(Book.class.getCanonicalName());
+
+		PDFView pdfView = findViewById(R.id.pdfViewer);
+		pdfView.fromAsset("latex3days.pdf").pages(0, 2, 1, 3, 3, 3).load();
 
 		binding.back.setOnClickListener(new View.OnClickListener() {
 			@Override

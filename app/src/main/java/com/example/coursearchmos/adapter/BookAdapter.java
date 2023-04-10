@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursearchmos.BookActivity;
 import com.example.coursearchmos.R;
-import com.example.coursearchmos.model.Book;
+//import com.example.coursearchmos.model.Book;
+import com.example.coursearchmos.model.BookModel;
 
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 	Context context;
-	List<Book> books;
+	List<BookModel> books;
 
-	public BookAdapter(Context context, List<Book> books) {
+	public BookAdapter(Context context, List<BookModel> books) {
 		this.context = context;
 		this.books = books;
 	}
@@ -35,14 +36,19 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 	@Override
 	public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
-		holder.bookTitle.setText(books.get(position).getTitle());
-		holder.bookAuthor.setText(books.get(position).getAuthor());
+//		holder.bookTitle.setText(books.get(position).getTitle());
+//		holder.bookAuthor.setText(books.get(position).getAuthor());
+
+//		holder.bookTitle.setText(books.get(position).getId());
+//		holder.bookAuthor.setText(books.get(position).getPath());
+		holder.bookTitle.setText("1");
+		holder.bookAuthor.setText(books.get(position).getPath());
 
 		holder.itemView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context, BookActivity.class);
-				intent.putExtra(Book.class.getCanonicalName(), books.get(holder.getAdapterPosition()));
+				intent.putExtra(BookModel.class.getCanonicalName(), books.get(holder.getAdapterPosition()));
 				context.startActivity(intent);
 			}
 		});
