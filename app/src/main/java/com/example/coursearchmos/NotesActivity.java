@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.coursearchmos.DataBase.NoteDBHelper;
+import com.example.coursearchmos.DataBase.NoteDBAdapter;
 import com.example.coursearchmos.adapter.NoteAdapter;
 import com.example.coursearchmos.databinding.ActivityNotesBinding;
 import com.example.coursearchmos.model.NoteModel;
@@ -18,8 +18,10 @@ import java.util.List;
 
 public class NotesActivity extends AppCompatActivity {
 	private ActivityNotesBinding binding;
-	private NoteDBHelper noteDBHelper;
 	protected NoteAdapter noteAdapter;
+
+	private NoteDBAdapter noteDBAdapter;
+
 	static List<NoteModel> notes = new ArrayList<>();
 
 	@Override
@@ -28,8 +30,8 @@ public class NotesActivity extends AppCompatActivity {
 		binding = ActivityNotesBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		noteDBHelper = new NoteDBHelper(NotesActivity.this);
-		notes = noteDBHelper.getAll();
+		noteDBAdapter = new NoteDBAdapter(NotesActivity.this);
+		notes = noteDBAdapter.getAll();
 
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
 				, RecyclerView.VERTICAL
@@ -92,6 +94,6 @@ public class NotesActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 
-		noteDBHelper.close();
+		noteDBAdapter.close();
 	}
 }

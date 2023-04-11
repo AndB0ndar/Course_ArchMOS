@@ -6,14 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.coursearchmos.DataBase.NoteDBHelper;
+import com.example.coursearchmos.DataBase.NoteDBAdapter;
 import com.example.coursearchmos.databinding.ActivityNoteBinding;
 import com.example.coursearchmos.model.NoteModel;
 
 public class NoteActivity extends AppCompatActivity {
 	private ActivityNoteBinding binding;
-	private NoteDBHelper noteDBHelper;
 	private NoteModel noteModel;
+
+	private NoteDBAdapter noteDBAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +22,11 @@ public class NoteActivity extends AppCompatActivity {
 		binding = ActivityNoteBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		noteDBHelper = new NoteDBHelper(NoteActivity.this);
+		noteDBAdapter = new NoteDBAdapter(NoteActivity.this);
 
 		Bundle args = getIntent().getExtras();
 		if (args != null) {
-			noteModel = noteDBHelper.getById(args.getInt(NoteModel.class.getCanonicalName()));
+			noteModel = noteDBAdapter.getById(args.getInt(NoteModel.class.getCanonicalName()));
 			// what is better to pass through the intent object or object id and get it from the database?
 //			noteModel = (NoteModel) args.getSerializable(NoteModel.class.getCanonicalName());
 			binding.title.setText(noteModel.getTitle());
@@ -56,14 +57,14 @@ public class NoteActivity extends AppCompatActivity {
 	private void Save(String title, String text) {
 		noteModel.setTitle(title);
 		noteModel.setText(text);
-		noteDBHelper.updateOne(noteModel);
+		noteDBAdapter.updateOne(noteModel);
 
 		Intent intent = new Intent(this, NotesActivity.class);
 		startActivity(intent);
 	}
 
 	private void Remove() {
-		noteDBHelper.deleteOne(noteModel);
+		noteDBAdapter.deleteOne(noteModel);
 
 		Intent intent = new Intent(this, NotesActivity.class);
 		startActivity(intent);
@@ -73,6 +74,6 @@ public class NoteActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 
-		noteDBHelper.close();
+		noteDBAdapter.close();
 	}
 }

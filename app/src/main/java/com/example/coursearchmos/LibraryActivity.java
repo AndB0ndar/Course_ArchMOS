@@ -4,21 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.coursearchmos.DataBase.BookDBHelper;
-import com.example.coursearchmos.DataBase.NoteDBHelper;
+import com.example.coursearchmos.DataBase.BookDBAdapter;
 import com.example.coursearchmos.adapter.BookAdapter;
 import com.example.coursearchmos.databinding.ActivityLibraryBinding;
-import com.example.coursearchmos.model.Book;
 import com.example.coursearchmos.model.BookModel;
-import com.example.coursearchmos.model.NoteModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +23,8 @@ public class LibraryActivity extends AppCompatActivity {
 	private static final int PICK_PDF_FILE = 2;
 	private ActivityLibraryBinding binding;
 	protected BookAdapter bookAdapter;
-	private BookDBHelper bookDBHelper;
+//	private BookDBHelper bookDBHelper;
+	private BookDBAdapter bookDBAdapter;
 	static List<BookModel> books = new ArrayList<>();
 
 	@Override
@@ -43,8 +39,8 @@ public class LibraryActivity extends AppCompatActivity {
 //		books.add(new Book(1, "Мертвые души", "Гоголь"));
 //		books.add(new Book(2, "Война и мир", "Толстой"));
 //		books.add(new Book(3, "Программирование", "Я"));
-		bookDBHelper = new BookDBHelper(LibraryActivity.this);
-		books = bookDBHelper.getAll();
+		bookDBAdapter = new BookDBAdapter(LibraryActivity.this);
+		books = bookDBAdapter.getAll();
 
 		SetBookRecycler(books);
 
@@ -84,7 +80,7 @@ public class LibraryActivity extends AppCompatActivity {
 			Uri uri = null;
 			if (resultData != null) {
 				uri = resultData.getData();
-				bookDBHelper.addOne(new BookModel(-1, uri.getPath(), "-"));
+				bookDBAdapter.addOne(new BookModel(-1, uri.getPath(), "-"));
 			}
 		}
 	}
@@ -114,13 +110,13 @@ public class LibraryActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 
-		books = bookDBHelper.getAll();
+		books = bookDBAdapter.getAll();
 		SetBookRecycler(books);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		bookDBHelper.close();
+		bookDBAdapter.close();
 	}
 }
