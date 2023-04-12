@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.coursearchmos.DataBase.BookDBAdapter;
+import com.example.coursearchmos.DataBase.BookDBHelper;
 import com.example.coursearchmos.adapter.BookAdapter;
 import com.example.coursearchmos.databinding.ActivityLibraryBinding;
 import com.example.coursearchmos.model.BookModel;
@@ -24,7 +24,7 @@ public class LibraryActivity extends AppCompatActivity {
 	private ActivityLibraryBinding binding;
 	protected BookAdapter bookAdapter;
 //	private BookDBHelper bookDBHelper;
-	private BookDBAdapter bookDBAdapter;
+	private BookDBHelper bookDBAdapter;
 	static List<BookModel> books = new ArrayList<>();
 
 	@Override
@@ -39,7 +39,7 @@ public class LibraryActivity extends AppCompatActivity {
 //		books.add(new Book(1, "Мертвые души", "Гоголь"));
 //		books.add(new Book(2, "Война и мир", "Толстой"));
 //		books.add(new Book(3, "Программирование", "Я"));
-		bookDBAdapter = new BookDBAdapter(LibraryActivity.this);
+		bookDBAdapter = new BookDBHelper(LibraryActivity.this);
 		books = bookDBAdapter.getAll();
 
 		SetBookRecycler(books);

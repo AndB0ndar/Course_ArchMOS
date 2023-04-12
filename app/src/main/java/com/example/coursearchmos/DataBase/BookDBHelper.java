@@ -4,30 +4,25 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.coursearchmos.model.BookModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDBAdapter extends DBAdapter {
+public class BookDBHelper extends DBHelper {
 	public static final String NOTE_TABLE = "BOOK_TABLE";
 	public static final String COLUMN_NOTE_PATH = "BOOK_PATH";
 	public static final String COLUMN_NOTE_INFO = "BOOK_INFO";
 	public static final String COLUMN_ID = "ID";
 
 
-	public BookDBAdapter(Context context) {
+	public BookDBHelper(Context context) {
 		super(context);
 	}
 
-	public void close() {
-		DBHelper.close();
-	}
-
 	public boolean addOne(BookModel bookModel) {
-		SQLiteDatabase db = DBHelper.getWritableDatabase();
+		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues cv = new ContentValues();
 
 		if (!isExistByPath(bookModel)) {
@@ -42,13 +37,13 @@ public class BookDBAdapter extends DBAdapter {
 
 	public boolean deleteOne(BookModel bookModel) {
 		String queryString = "DELETE FROM " + NOTE_TABLE + " WHERE " + COLUMN_ID + " = " + bookModel.getId();
-		SQLiteDatabase db = DBHelper.getWritableDatabase();
+		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		return cursor.moveToFirst();
 	}
 
 	public boolean updateOne(BookModel bookModel) {
-		SQLiteDatabase db = DBHelper.getWritableDatabase();
+		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues cv = new ContentValues();
 
 		cv.put(COLUMN_ID, bookModel.getId());
@@ -69,7 +64,7 @@ public class BookDBAdapter extends DBAdapter {
 		List<BookModel> returnList = new ArrayList<>();
 
 		String queryString = "SELECT * FROM " + NOTE_TABLE;
-		SQLiteDatabase db = DBHelper.getReadableDatabase();
+		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
 			// loop through the cursor and create new Note object
@@ -93,7 +88,7 @@ public class BookDBAdapter extends DBAdapter {
 		BookModel bookModel = null;
 
 		String queryString = "SELECT * FROM " + NOTE_TABLE + " WHERE " + COLUMN_ID + " = " + id;
-		SQLiteDatabase db = DBHelper.getReadableDatabase();
+		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
 			int bookID = cursor.getInt(0);

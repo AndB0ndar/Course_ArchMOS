@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.coursearchmos.DataBase.NoteDBAdapter;
+import com.example.coursearchmos.DataBase.NoteDBHelper;
 import com.example.coursearchmos.databinding.ActivityAddNoteBinding;
 import com.example.coursearchmos.model.NoteModel;
 
 public class AddNoteActivity extends AppCompatActivity {
 	private ActivityAddNoteBinding binding;
-	private NoteDBAdapter noteDBAdapter;
+	private NoteDBHelper noteDBAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class AddNoteActivity extends AppCompatActivity {
 		binding = ActivityAddNoteBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		noteDBAdapter = new NoteDBAdapter(AddNoteActivity.this);
+		noteDBAdapter = new NoteDBHelper(AddNoteActivity.this);
 
 		binding.saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
