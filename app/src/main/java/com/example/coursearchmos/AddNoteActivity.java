@@ -12,7 +12,7 @@ import com.example.coursearchmos.model.NoteModel;
 
 public class AddNoteActivity extends AppCompatActivity {
 	private ActivityAddNoteBinding binding;
-	private NoteDBHelper noteDBAdapter;
+	private NoteDBHelper noteDBHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class AddNoteActivity extends AppCompatActivity {
 		binding = ActivityAddNoteBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		noteDBAdapter = new NoteDBHelper(AddNoteActivity.this);
+		noteDBHelper = new NoteDBHelper(AddNoteActivity.this);
 
 		binding.saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -34,7 +34,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
 	private void saveAndBack(String title, String text) {
 		NoteModel noteModel = new NoteModel(-1, title, text);
-		noteDBAdapter.addOne(noteModel);
+		noteDBHelper.addOne(noteModel);
 
 		Intent intent = new Intent(this, NotesActivity.class);
 		startActivity(intent);
@@ -44,6 +44,6 @@ public class AddNoteActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 
-		noteDBAdapter.close();
+		noteDBHelper.close();
 	}
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.example.coursearchmos.R;
 //import com.example.coursearchmos.model.Book;
 import com.example.coursearchmos.model.BookModel;
 
+import java.io.File;
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
@@ -36,19 +38,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 	@Override
 	public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
-//		holder.bookTitle.setText(books.get(position).getTitle());
-//		holder.bookAuthor.setText(books.get(position).getAuthor());
-
-//		holder.bookTitle.setText(books.get(position).getId());
-//		holder.bookAuthor.setText(books.get(position).getPath());
-		holder.bookTitle.setText("1");
-		holder.bookAuthor.setText(books.get(position).getPath());
+		holder.bookTitle.setText(books.get(position).getTitle());
+		holder.bookAuthor.setText(books.get(position).getInfo());
 
 		holder.itemView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context, BookActivity.class);
-				intent.putExtra(BookModel.class.getCanonicalName(), books.get(holder.getAdapterPosition()));
+				intent.putExtra(BookModel.class.getCanonicalName()
+						, books.get(holder.getAdapterPosition()).getId()
+				);
 				context.startActivity(intent);
 			}
 		});

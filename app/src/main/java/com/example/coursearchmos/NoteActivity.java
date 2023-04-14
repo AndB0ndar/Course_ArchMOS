@@ -14,7 +14,7 @@ public class NoteActivity extends AppCompatActivity {
 	private ActivityNoteBinding binding;
 	private NoteModel noteModel;
 
-	private NoteDBHelper noteDBAdapter;
+	private NoteDBHelper noteDBHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +22,11 @@ public class NoteActivity extends AppCompatActivity {
 		binding = ActivityNoteBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		noteDBAdapter = new NoteDBHelper(NoteActivity.this);
+		noteDBHelper = new NoteDBHelper(NoteActivity.this);
 
 		Bundle args = getIntent().getExtras();
 		if (args != null) {
-			noteModel = noteDBAdapter.getById(args.getInt(NoteModel.class.getCanonicalName()));
+			noteModel = noteDBHelper.getById(args.getInt(NoteModel.class.getCanonicalName()));
 			// what is better to pass through the intent object or object id and get it from the database?
 //			noteModel = (NoteModel) args.getSerializable(NoteModel.class.getCanonicalName());
 			binding.title.setText(noteModel.getTitle());
@@ -57,14 +57,14 @@ public class NoteActivity extends AppCompatActivity {
 	private void Save(String title, String text) {
 		noteModel.setTitle(title);
 		noteModel.setText(text);
-		noteDBAdapter.updateOne(noteModel);
+		noteDBHelper.updateOne(noteModel);
 
 		Intent intent = new Intent(this, NotesActivity.class);
 		startActivity(intent);
 	}
 
 	private void Remove() {
-		noteDBAdapter.deleteOne(noteModel);
+		noteDBHelper.deleteOne(noteModel);
 
 		Intent intent = new Intent(this, NotesActivity.class);
 		startActivity(intent);
@@ -74,6 +74,6 @@ public class NoteActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 
-		noteDBAdapter.close();
+		noteDBHelper.close();
 	}
 }

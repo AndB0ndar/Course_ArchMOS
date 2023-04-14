@@ -1,9 +1,14 @@
 package com.example.coursearchmos;
 
 import android.app.Activity;
+import android.content.ContentProvider;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +20,17 @@ import com.example.coursearchmos.adapter.BookAdapter;
 import com.example.coursearchmos.databinding.ActivityLibraryBinding;
 import com.example.coursearchmos.model.BookModel;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +39,7 @@ public class LibraryActivity extends AppCompatActivity {
 	private static final int PICK_PDF_FILE = 2;
 	private ActivityLibraryBinding binding;
 	protected BookAdapter bookAdapter;
-//	private BookDBHelper bookDBHelper;
-	private BookDBHelper bookDBAdapter;
+	private BookDBHelper bookDBHelper;
 	static List<BookModel> books = new ArrayList<>();
 
 	@Override
@@ -39,8 +54,8 @@ public class LibraryActivity extends AppCompatActivity {
 //		books.add(new Book(1, "Мертвые души", "Гоголь"));
 //		books.add(new Book(2, "Война и мир", "Толстой"));
 //		books.add(new Book(3, "Программирование", "Я"));
-		bookDBAdapter = new BookDBHelper(LibraryActivity.this);
-		books = bookDBAdapter.getAll();
+		bookDBHelper = new BookDBHelper(LibraryActivity.this);
+		books = bookDBHelper.getAll();
 
 		SetBookRecycler(books);
 
@@ -80,7 +95,37 @@ public class LibraryActivity extends AppCompatActivity {
 			Uri uri = null;
 			if (resultData != null) {
 				uri = resultData.getData();
-				bookDBAdapter.addOne(new BookModel(-1, uri.getPath(), "-"));
+
+				ContentResolver contentResolver = getContentResolver();
+
+				String[] tmp = uri.getPath().split("/");
+				String name = tmp[tmp.length - 1];
+				String path = getFilesDir().getPath() + '/' + name;
+
+				Log.d("file", path);
+
+				File file = new File(path);
+				if (!file.exists()) {
+					try (InputStream in = contentResolver.openInputStream(uri)) {
+						file.createNewFile();
+						try (OutputStream out = new FileOutputStream(file)) {
+							byte[] buf = new byte[1024];
+							int len;
+							while ((len = in.read(buf)) > 0) {
+								out.write(buf, 0, len);
+							}
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					bookDBHelper.addOne(new BookModel(-1
+							, path
+							, uri.getUserInfo()
+					));
+					Log.d("LibraryActivity", "File added in BD");
+				} else {
+					Log.d("LibraryActivity", "File NOT added in BD [EXISTS]");
+				}
 			}
 		}
 	}
@@ -110,13 +155,13 @@ public class LibraryActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 
-		books = bookDBAdapter.getAll();
+		books = bookDBHelper.getAll();
 		SetBookRecycler(books);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		bookDBAdapter.close();
+		bookDBHelper.close();
 	}
 }

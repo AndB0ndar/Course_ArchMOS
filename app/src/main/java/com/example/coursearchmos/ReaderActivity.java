@@ -8,9 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.coursearchmos.DataBase.BookDBHelper;
 import com.example.coursearchmos.adapter.BookAdapter;
 import com.example.coursearchmos.databinding.ActivityReaderBinding;
-import com.example.coursearchmos.model.Book;
 import com.example.coursearchmos.model.BookModel;
 
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ public class ReaderActivity extends AppCompatActivity {
 	private ActivityReaderBinding binding;
 	protected BookAdapter bookAdapter;
 	static private BookModel book = null;
+	private BookDBHelper bookDBHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +28,12 @@ public class ReaderActivity extends AppCompatActivity {
 		binding = ActivityReaderBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
+		bookDBHelper = new BookDBHelper(ReaderActivity.this);
+
 		Bundle args = getIntent().getExtras();
 		if (args != null) {
-			book = args.getParcelable(Book.class.getCanonicalName());
+			int id = args.getInt(BookModel.class.getCanonicalName());
+			book = bookDBHelper.getById(id);
 		}
 		if (book != null) {
 			SetBookRecycler(book);
@@ -59,7 +63,6 @@ public class ReaderActivity extends AppCompatActivity {
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
 		binding.readerRecycler.setLayoutManager(layoutManager);
 
-		// TODO: add db
 		List<BookModel> books = new ArrayList<>();
 		books.add(book);
 		bookAdapter = new BookAdapter(this, books);

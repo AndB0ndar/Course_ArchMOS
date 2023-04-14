@@ -7,16 +7,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 class DBHelper extends SQLiteOpenHelper {
 	public static final String DATABASE_NAME = "reader.db";
 	public static final int DATABASE_VERSION = 1;
-	private static final String CREATE_TABLE_CARS =
+	private static final String CREATE_TABLE_NOTES =
 			"CREATE TABLE " + NoteDBHelper.NOTE_TABLE
 					+ " (" + NoteDBHelper.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ NoteDBHelper.COLUMN_NOTE_TITLE + " TEXT, "
 					+ NoteDBHelper.COLUMN_NOTE_TEXT + " TEXT)";
-	private static final String CREATE_TABLE_BOATS =
+	private static final String CREATE_TABLE_BOOKS =
 			"CREATE TABLE " + BookDBHelper.NOTE_TABLE
-				+ " (" + BookDBHelper.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ BookDBHelper.COLUMN_NOTE_PATH + " TEXT, "
-			+ BookDBHelper.COLUMN_NOTE_INFO + " TEXT)";
+					+ " (" + BookDBHelper.COLUMN_ID
+					+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+					+ BookDBHelper.COLUMN_NOTE_PATH + " TEXT, "
+					+ BookDBHelper.COLUMN_NOTE_INFO + " TEXT)";
 
 
 	public DBHelper(Context context) {
@@ -25,8 +26,8 @@ class DBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL(CREATE_TABLE_CARS);
-		db.execSQL(CREATE_TABLE_BOATS);
+		db.execSQL(CREATE_TABLE_NOTES);
+		db.execSQL(CREATE_TABLE_BOOKS);
 	}
 
 	@Override

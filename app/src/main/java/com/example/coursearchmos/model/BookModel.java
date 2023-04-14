@@ -4,10 +4,14 @@ import java.io.Serializable;
 
 public class BookModel implements Serializable {
 	private int id;
-	private String path, info;
+	private String title;
+	private String path;
+	private String info;
 
 	public BookModel(int id, String path, String info) {
 		this.id = id;
+		String[] s = path.split("/");
+		this.title = s[s.length - 1].split("\\.")[0];
 		this.path = path;
 		this.info = info;
 	}
@@ -30,6 +34,14 @@ public class BookModel implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getPath() {

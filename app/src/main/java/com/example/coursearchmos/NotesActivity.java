@@ -20,7 +20,7 @@ public class NotesActivity extends AppCompatActivity {
 	private ActivityNotesBinding binding;
 	protected NoteAdapter noteAdapter;
 
-	private NoteDBHelper noteDBAdapter;
+	private NoteDBHelper noteDBHelper;
 
 	static List<NoteModel> notes = new ArrayList<>();
 
@@ -30,8 +30,8 @@ public class NotesActivity extends AppCompatActivity {
 		binding = ActivityNotesBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		noteDBAdapter = new NoteDBHelper(NotesActivity.this);
-		notes = noteDBAdapter.getAll();
+		noteDBHelper = new NoteDBHelper(NotesActivity.this);
+		notes = noteDBHelper.getAll();
 
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this
 				, RecyclerView.VERTICAL
@@ -94,6 +94,6 @@ public class NotesActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 
-		noteDBAdapter.close();
+		noteDBHelper.close();
 	}
 }
