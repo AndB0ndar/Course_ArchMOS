@@ -7,13 +7,15 @@ public class BookModel implements Serializable {
 	private String title;
 	private String path;
 	private String info;
+	private int lastCurPage;
 
-	public BookModel(int id, String path, String info) {
+	public BookModel(int id, String path, String info, int lastCurPage) {
 		this.id = id;
 		String[] s = path.split("/");
 		this.title = s[s.length - 1].split("\\.")[0];
 		this.path = path;
 		this.info = info;
+		this.lastCurPage = lastCurPage;
 	}
 
 	public BookModel() {
@@ -23,8 +25,10 @@ public class BookModel implements Serializable {
 	public String toString() {
 		return "BookModel{" +
 				"id=" + id +
+				", title='" + title + '\'' +
 				", path='" + path + '\'' +
 				", info='" + info + '\'' +
+				", lastCurPage=" + lastCurPage +
 				'}';
 	}
 
@@ -58,5 +62,13 @@ public class BookModel implements Serializable {
 
 	public void setInfo(String info) {
 		this.info = info;
+	}
+
+	public int getLastCurPage() {
+		return lastCurPage;
+	}
+
+	public void setLastCurPage(int lastCurPage) {
+		this.lastCurPage = lastCurPage;
 	}
 }

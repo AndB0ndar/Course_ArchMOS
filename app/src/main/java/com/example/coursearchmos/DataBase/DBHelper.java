@@ -11,13 +11,15 @@ class DBHelper extends SQLiteOpenHelper {
 			"CREATE TABLE " + NoteDBHelper.NOTE_TABLE
 					+ " (" + NoteDBHelper.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ NoteDBHelper.COLUMN_NOTE_TITLE + " TEXT, "
-					+ NoteDBHelper.COLUMN_NOTE_TEXT + " TEXT)";
+					+ NoteDBHelper.COLUMN_NOTE_TEXT + " TEXT, "
+					+ NoteDBHelper.COLUMN_NOTE_ID_BOOK + " INTEGER)";
 	private static final String CREATE_TABLE_BOOKS =
 			"CREATE TABLE " + BookDBHelper.NOTE_TABLE
 					+ " (" + BookDBHelper.COLUMN_ID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ BookDBHelper.COLUMN_NOTE_PATH + " TEXT, "
-					+ BookDBHelper.COLUMN_NOTE_INFO + " TEXT)";
+					+ BookDBHelper.COLUMN_NOTE_INFO + " TEXT, "
+					+ BookDBHelper.COLUMN_NOTE_LAST_CUR_PAGE + " TEXT)";
 
 
 	public DBHelper(Context context) {

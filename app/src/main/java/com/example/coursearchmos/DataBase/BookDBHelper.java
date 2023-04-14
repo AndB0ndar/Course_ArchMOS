@@ -14,6 +14,7 @@ public class BookDBHelper extends DBHelper {
 	public static final String NOTE_TABLE = "BOOK_TABLE";
 	public static final String COLUMN_NOTE_PATH = "BOOK_PATH";
 	public static final String COLUMN_NOTE_INFO = "BOOK_INFO";
+	public static final String COLUMN_NOTE_LAST_CUR_PAGE = "BOOK_LAST_CUR_PAGE";
 	public static final String COLUMN_ID = "ID";
 
 
@@ -28,6 +29,7 @@ public class BookDBHelper extends DBHelper {
 		if (!isExistByPath(bookModel)) {
 			cv.put(COLUMN_NOTE_PATH, bookModel.getPath());
 			cv.put(COLUMN_NOTE_INFO, bookModel.getInfo());
+			cv.put(COLUMN_NOTE_LAST_CUR_PAGE, bookModel.getLastCurPage());
 		}
 
 		long insert = db.insert(NOTE_TABLE, null, cv);
@@ -49,6 +51,7 @@ public class BookDBHelper extends DBHelper {
 		cv.put(COLUMN_ID, bookModel.getId());
 		cv.put(COLUMN_NOTE_PATH, bookModel.getPath());
 		cv.put(COLUMN_NOTE_INFO, bookModel.getInfo());
+		cv.put(COLUMN_NOTE_LAST_CUR_PAGE, bookModel.getLastCurPage());
 
 		db.update(NOTE_TABLE, cv, "id = ?", new String[]{String.valueOf(bookModel.getId())});
 		db.close();
@@ -72,8 +75,9 @@ public class BookDBHelper extends DBHelper {
 				int bookID = cursor.getInt(0);
 				String bookPATH = cursor.getString(1);
 				String bookINFO = cursor.getString(2);
+				int bookLCP = cursor.getInt(3);
 
-				BookModel bookModel = new BookModel(bookID, bookPATH, bookINFO);
+				BookModel bookModel = new BookModel(bookID, bookPATH, bookINFO, bookLCP);
 				returnList.add(bookModel);
 			} while (cursor.moveToNext());
 		}
@@ -94,8 +98,9 @@ public class BookDBHelper extends DBHelper {
 			int bookID = cursor.getInt(0);
 			String bookPATH = cursor.getString(1);
 			String bookINFO = cursor.getString(2);
+			int bookLCP = cursor.getInt(3);
 
-			bookModel = new BookModel(bookID, bookPATH, bookINFO);
+			bookModel = new BookModel(bookID, bookPATH, bookINFO, bookLCP);
 		}
 
 		cursor.close();

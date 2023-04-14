@@ -14,6 +14,7 @@ public class NoteDBHelper extends DBHelper {
 	public static final String NOTE_TABLE = "NOTE_TABLE";
 	public static final String COLUMN_NOTE_TITLE = "NOTE_TITLE";
 	public static final String COLUMN_NOTE_TEXT = "NOTE_TEXT";
+	public static final String COLUMN_NOTE_ID_BOOK = "NOTE_ID_BOOK";
 	public static final String COLUMN_ID = "ID";
 
 
@@ -27,6 +28,7 @@ public class NoteDBHelper extends DBHelper {
 
 		cv.put(COLUMN_NOTE_TITLE, noteModel.getTitle());
 		cv.put(COLUMN_NOTE_TEXT, noteModel.getText());
+		cv.put(COLUMN_NOTE_ID_BOOK, noteModel.getIdBook());
 
 		long insert = db.insert(NOTE_TABLE, null, cv);
 		db.close();
@@ -52,8 +54,9 @@ public class NoteDBHelper extends DBHelper {
 				int noteID = cursor.getInt(0);
 				String noteTITLE = cursor.getString(1);
 				String noteTEXT = cursor.getString(2);
+				int bookID = cursor.getInt(3);
 
-				NoteModel noteModel = new NoteModel(noteID, noteTITLE, noteTEXT);
+				NoteModel noteModel = new NoteModel(noteID, noteTITLE, noteTEXT, bookID);
 				returnList.add(noteModel);
 			} while (cursor.moveToNext());
 		}
@@ -74,8 +77,9 @@ public class NoteDBHelper extends DBHelper {
 			int noteID = cursor.getInt(0);
 			String noteTITLE = cursor.getString(1);
 			String noteTEXT = cursor.getString(2);
+			int bookID = cursor.getInt(3);
 
-			noteModel = new NoteModel(noteID, noteTITLE, noteTEXT);
+			noteModel = new NoteModel(noteID, noteTITLE, noteTEXT, bookID);
 		}
 
 		cursor.close();
@@ -91,6 +95,7 @@ public class NoteDBHelper extends DBHelper {
 		cv.put(COLUMN_ID, noteModel.getId());
 		cv.put(COLUMN_NOTE_TITLE, noteModel.getTitle());
 		cv.put(COLUMN_NOTE_TEXT, noteModel.getText());
+		cv.put(COLUMN_NOTE_ID_BOOK, noteModel.getIdBook());
 
 		db.update(NOTE_TABLE, cv, "id = ?", new String[]{String.valueOf(noteModel.getId())});
 		db.close();

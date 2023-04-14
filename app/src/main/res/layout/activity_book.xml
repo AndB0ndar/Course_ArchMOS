@@ -36,11 +36,75 @@
             android:src="@drawable/ic_menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.github.barteksc.pdfviewer.PDFView
-        android:id="@+id/pdfViewer"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" >
+            <ImageView
+                android:id="@+id/imgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:scaleType="fitXY"
+                android:contentDescription="@null" />
+        </HorizontalScrollView>
+    </ScrollView>
 
-    </com.github.barteksc.pdfviewer.PDFView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/btnPrevious"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="Назад"
+            android:textColor="@color/black"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:text="Вперёд"
+            android:textColor="@color/black"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+        <Button
+            android:id="@+id/zoomout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:text="+"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+        <Button
+            android:id="@+id/zoomin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:text="-"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+    </LinearLayout>
 
 </LinearLayout>

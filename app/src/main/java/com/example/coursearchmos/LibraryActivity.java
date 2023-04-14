@@ -50,10 +50,6 @@ public class LibraryActivity extends AppCompatActivity {
 
 		binding.btnAdd.setOnClickListener((v -> { openFile(); }));
 
-//		books.add(new Book(0, "Евгений Онегин", "Пушкин"));
-//		books.add(new Book(1, "Мертвые души", "Гоголь"));
-//		books.add(new Book(2, "Война и мир", "Толстой"));
-//		books.add(new Book(3, "Программирование", "Я"));
 		bookDBHelper = new BookDBHelper(LibraryActivity.this);
 		books = bookDBHelper.getAll();
 
@@ -121,6 +117,7 @@ public class LibraryActivity extends AppCompatActivity {
 					bookDBHelper.addOne(new BookModel(-1
 							, path
 							, uri.getUserInfo()
+							, 0
 					));
 					Log.d("LibraryActivity", "File added in BD");
 				} else {
