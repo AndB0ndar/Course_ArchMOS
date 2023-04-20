@@ -36,7 +36,7 @@ public class AddNoteActivity extends AppCompatActivity {
 		NoteModel noteModel = new NoteModel(-1, title, text);
 		noteDBHelper.addOne(noteModel);
 
-		Intent intent = new Intent(this, NotesActivity.class);
+		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
 

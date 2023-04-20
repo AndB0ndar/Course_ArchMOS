@@ -50,7 +50,7 @@ public class NoteActivity extends AppCompatActivity {
 	}
 
 	private void GoBack() {
-		Intent intent = new Intent(this, NotesActivity.class);
+		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
 
@@ -59,14 +59,14 @@ public class NoteActivity extends AppCompatActivity {
 		noteModel.setText(text);
 		noteDBHelper.updateOne(noteModel);
 
-		Intent intent = new Intent(this, NotesActivity.class);
+		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
 
 	private void Remove() {
 		noteDBHelper.deleteOne(noteModel);
 
-		Intent intent = new Intent(this, NotesActivity.class);
+		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
 

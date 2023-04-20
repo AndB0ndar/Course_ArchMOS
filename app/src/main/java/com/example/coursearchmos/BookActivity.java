@@ -74,7 +74,7 @@ public class BookActivity extends AppCompatActivity {
 		binding.back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(v.getContext(), ReaderActivity.class);
+				Intent intent = new Intent(v.getContext(), MainActivity.class);
 				intent.putExtra(BookModel.class.getCanonicalName(), bookModel.getId());
 				startActivity(intent);
 			}
@@ -112,14 +112,17 @@ public class BookActivity extends AppCompatActivity {
 	}
 
 	private void displayPage(int index) {
-		if (pdfRenderer.getPageCount() <= index) return;
+		if (pdfRenderer.getPageCount() <= index)
+			return;
 		// закрываем текущую страницу
-		if (curPage != null) curPage.close();
+		if (curPage != null)
+			curPage.close();
 		// открываем нужную страницу
 		curPage = pdfRenderer.openPage(index);
 		// определяем размеры Bitmap
-		int newWidth = (int) (getResources().getDisplayMetrics().widthPixels * curPage.getWidth() / 72
-				* currentZoomLevel / 40);
+		int newWidth =
+				(int) (getResources().getDisplayMetrics().widthPixels * curPage.getWidth() / 72
+						* currentZoomLevel / 40);
 		int newHeight =
 				(int) (getResources().getDisplayMetrics().heightPixels * curPage.getHeight() / 72
 						* currentZoomLevel / 64);

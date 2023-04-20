@@ -37,4 +37,7 @@
     <string name="bt_save">Сохранить</string>
     <string name="bt_remove">Удалить</string>
     <string name="bt_edited">Редоктировать</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
