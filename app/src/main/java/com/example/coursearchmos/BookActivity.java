@@ -8,21 +8,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.pdf.PdfRenderer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.coursearchmos.DataBase.BookDBHelper;
 import com.example.coursearchmos.databinding.ActivityBookBinding;
 import com.example.coursearchmos.model.BookModel;
-import com.example.coursearchmos.model.NoteModel;
-import com.github.barteksc.pdfviewer.PDFView;
 
 import java.io.File;
 import java.io.IOException;
@@ -127,11 +121,14 @@ public class BookActivity extends AppCompatActivity {
 				(int) (getResources().getDisplayMetrics().heightPixels * curPage.getHeight() / 72
 						* currentZoomLevel / 64);
 		Bitmap bitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
-		Matrix matrix = new Matrix();
-		float dpiAdjustedZoomLevel = currentZoomLevel * DisplayMetrics.DENSITY_MEDIUM
-				/ getResources().getDisplayMetrics().densityDpi;
-		matrix.setScale(dpiAdjustedZoomLevel, dpiAdjustedZoomLevel);
-		curPage.render(bitmap, null, matrix, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+//		Matrix matrix = new Matrix();
+//		float dpiAdjustedZoomLevel = currentZoomLevel * DisplayMetrics.DENSITY_MEDIUM
+//				/ getResources().getDisplayMetrics().densityDpi;
+//		matrix.setScale(dpiAdjustedZoomLevel, dpiAdjustedZoomLevel);
+//		curPage.render(bitmap, null, matrix, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+		curPage.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 		// отображаем результат рендера
 		binding.imgView.setImageBitmap(bitmap);
 		// проверяем, нужно ли делать кнопки недоступными
