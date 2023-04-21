@@ -61,7 +61,6 @@ public class LibraryFragment extends Fragment {
 				bookAdapter.setFgRemove(isChecked);
 		});
 
-//		libraryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 		return root;
 	}
 
@@ -80,7 +79,7 @@ public class LibraryFragment extends Fragment {
 		super.onResume();
 
 		books = bookDBHelper.getAll();
-		SetBookRecycler();
+		bookAdapter.setBooks(books);
 	}
 
 	@Override

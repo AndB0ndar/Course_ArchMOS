@@ -29,7 +29,7 @@ import java.util.List;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 	private static final int HEIGHT = 399;
 	private static final double RATIO = 297.0 / 210.0;
-	private Context context;
+	private final Context context;
 	private List<BookModel> books;
 	private boolean fg_remove;
 
@@ -111,6 +111,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 			Log.d("BookAdapter", "Error open pdf document");
 		}
 		return null;
+	}
+
+	public void setBooks(List<BookModel> books) {
+		this.books = books;
+		notifyDataSetChanged();
 	}
 
 	public void setFgRemove(boolean fg_remove) {
