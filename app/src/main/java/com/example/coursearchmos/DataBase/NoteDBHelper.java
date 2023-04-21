@@ -102,4 +102,28 @@ public class NoteDBHelper extends DBHelper {
 		return true;
 	}
 
+	public List<NoteModel> getAllByBook(int id) {
+		List<NoteModel> returnList = new ArrayList<>();
+
+		String queryString = "SELECT * FROM " + NOTE_TABLE + " WHERE " + COLUMN_NOTE_ID_BOOK + " = " + id;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(queryString, null);
+		if (cursor.moveToFirst()){
+			do {
+				int noteID = cursor.getInt(0);
+				String noteTITLE = cursor.getString(1);
+				String noteTEXT = cursor.getString(2);
+				int bookID = cursor.getInt(3);
+
+				NoteModel noteModel = new NoteModel(noteID, noteTITLE, noteTEXT, bookID);
+				returnList.add(noteModel);
+			} while (cursor.moveToNext());
+		}
+
+		cursor.close();
+		db.close();
+
+		return returnList;
+	}
+
 }

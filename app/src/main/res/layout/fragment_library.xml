@@ -37,7 +37,7 @@
             android:textOn="@string/bt_done"
             android:textOff="@string/bt_remove"
             android:textColor="@color/grey"
-            style="?android:attr/borderlessButtonStyle"
+            android:background="@null"
 
             app:layout_constraintBottom_toBottomOf="@+id/head"
             app:layout_constraintEnd_toEndOf="@+id/head"

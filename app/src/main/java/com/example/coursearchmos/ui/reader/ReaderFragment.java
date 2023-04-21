@@ -1,6 +1,7 @@
 package com.example.coursearchmos.ui.reader;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursearchmos.DataBase.BookDBHelper;
+import com.example.coursearchmos.DataBase.NoteDBHelper;
 import com.example.coursearchmos.adapter.BookAdapter;
+import com.example.coursearchmos.adapter.NoteAdapter;
 import com.example.coursearchmos.databinding.FragmentReaderBinding;
 import com.example.coursearchmos.model.BookModel;
+import com.example.coursearchmos.model.NoteModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +27,7 @@ public class ReaderFragment extends Fragment {
 	private FragmentReaderBinding binding;
 
 	protected BookAdapter bookAdapter;
+	protected NoteAdapter noteAdapter;
 	static private BookModel book = null;
 
 	public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,21 +43,32 @@ public class ReaderFragment extends Fragment {
 			book = bookDBHelper.getLast();
 			SetBookRecycler();
 		}
+		setNoteRecycler();
 
-//		dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 		return root;
 	}
 
 	private void SetBookRecycler() {
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext()
-				, RecyclerView.VERTICAL
+				, RecyclerView.HORIZONTAL
 				, false);
 		binding.readerRecycler.setLayoutManager(layoutManager);
-
 		List<BookModel> books = new ArrayList<>();
 		books.add(book);
 		bookAdapter = new BookAdapter(getContext(), books);
 		binding.readerRecycler.setAdapter(bookAdapter);
+	}
+
+
+	private void setNoteRecycler() {
+		NoteDBHelper noteDBHelper = new NoteDBHelper(getContext());
+		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext()
+				, RecyclerView.VERTICAL
+				, false);
+		binding.notesRecycler.setLayoutManager(layoutManager);
+		List<NoteModel> notes = noteDBHelper.getAllByBook(0);
+		noteAdapter = new NoteAdapter(getContext(), notes);
+		binding.notesRecycler.setAdapter(noteAdapter);
 	}
 
 	@Override

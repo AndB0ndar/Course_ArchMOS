@@ -29,7 +29,7 @@ public class AddNoteActivity extends AppCompatActivity {
 	}
 
 	private void saveAndBack(String title, String text) {
-		NoteModel noteModel = new NoteModel(-1, title, text);
+		NoteModel noteModel = new NoteModel(-1, title, text, 0);
 		noteDBHelper.addOne(noteModel);
 
 		Intent intent = new Intent(this, MainActivity.class);
