@@ -35,13 +35,8 @@ public class ReaderFragment extends Fragment {
 		View root = binding.getRoot();
 
 		bookDBHelper = new BookDBHelper(getContext());
-
-//		Bundle args = getIntent().getExtras();
-//		if (args != null) {
-//			int id = args.getInt(BookModel.class.getCanonicalName());
-//			book = bookDBHelper.getById(id);
-//		}
-		if (book != null) {
+		if (!bookDBHelper.isEmpty()) {
+			book = bookDBHelper.getLast();
 			SetBookRecycler(book);
 		}
 

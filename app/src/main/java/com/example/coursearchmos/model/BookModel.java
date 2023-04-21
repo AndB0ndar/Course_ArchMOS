@@ -4,18 +4,17 @@ import java.io.Serializable;
 
 public class BookModel implements Serializable {
 	private int id;
-	private String title;
-	private String path;
-	private String info;
-	private int lastCurPage;
+	private String title, path, info;
+	private int lastCurPage, time;
 
-	public BookModel(int id, String path, String info, int lastCurPage) {
+	public BookModel(int id, String path, String info, int lastCurPage, int time) {
 		this.id = id;
 		String[] s = path.split("/");
 		this.title = s[s.length - 1].split("\\.")[0];
 		this.path = path;
 		this.info = info;
 		this.lastCurPage = lastCurPage;
+		this.time = time;
 	}
 
 	public BookModel() {
@@ -70,5 +69,13 @@ public class BookModel implements Serializable {
 
 	public void setLastCurPage(int lastCurPage) {
 		this.lastCurPage = lastCurPage;
+	}
+
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
 	}
 }

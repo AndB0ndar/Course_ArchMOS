@@ -34,6 +34,8 @@ public class BookActivity extends AppCompatActivity {
 	private ParcelFileDescriptor descriptor;
 	private float currentZoomLevel = 7;
 
+	private long timeStart;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,6 +46,7 @@ public class BookActivity extends AppCompatActivity {
 
 		Bundle args = getIntent().getExtras();
 		bookModel = bookDBHelper.getById(args.getInt(BookModel.class.getCanonicalName()));
+
 		path = bookModel.getPath();
 		currentPage = bookModel.getLastCurPage();
 
@@ -83,7 +86,8 @@ public class BookActivity extends AppCompatActivity {
 		});
 	}
 
-	@Override public void onStart() {
+	@Override
+	public void onStart() {
 		super.onStart();
 		try {
 			openPdfRenderer();
@@ -128,7 +132,8 @@ public class BookActivity extends AppCompatActivity {
 //		matrix.setScale(dpiAdjustedZoomLevel, dpiAdjustedZoomLevel);
 //		curPage.render(bitmap, null, matrix, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 
-		curPage.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+		curPage.render(bitmap, null, null
+				, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 		// отображаем результат рендера
 		binding.imgView.setImageBitmap(bitmap);
 		// проверяем, нужно ли делать кнопки недоступными
@@ -154,6 +159,19 @@ public class BookActivity extends AppCompatActivity {
 		dialog.show();
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		timeStart = System.currentTimeMillis();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		int time = bookModel.getTime() + (int) ((System.currentTimeMillis() - timeStart) / 1000);
+		bookModel.setTime(time);
+	}
+
 	@Override public void onStop() {
 		super.onStop();
 		try {
@@ -161,7 +179,6 @@ public class BookActivity extends AppCompatActivity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-//		System.currentTimeMillis();
 		bookModel.setLastCurPage(curPage.getIndex());
 		bookDBHelper.updateOne(bookModel);
 		bookDBHelper.close();

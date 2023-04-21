@@ -17,9 +17,10 @@ class DBHelper extends SQLiteOpenHelper {
 			"CREATE TABLE " + BookDBHelper.NOTE_TABLE
 					+ " (" + BookDBHelper.COLUMN_ID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ BookDBHelper.COLUMN_NOTE_PATH + " TEXT, "
-					+ BookDBHelper.COLUMN_NOTE_INFO + " TEXT, "
-					+ BookDBHelper.COLUMN_NOTE_LAST_CUR_PAGE + " TEXT)";
+					+ BookDBHelper.COLUMN_BOOK_PATH + " TEXT, "
+					+ BookDBHelper.COLUMN_BOOK_INFO + " TEXT, "
+					+ BookDBHelper.COLUMN_BOOK_LAST_CUR_PAGE + " TEXT, "
+					+ BookDBHelper.COLUMN_BOOK_TIME + " INTEGER)";
 
 
 	public DBHelper(Context context) {

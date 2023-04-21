@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 							, path
 							, uri.getUserInfo()
 							, 0
+							, 0
 					));
 					Log.d("LibraryActivity", "File added in BD");
 				} else {
