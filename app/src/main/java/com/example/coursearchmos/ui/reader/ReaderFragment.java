@@ -24,7 +24,6 @@ public class ReaderFragment extends Fragment {
 
 	protected BookAdapter bookAdapter;
 	static private BookModel book = null;
-	private BookDBHelper bookDBHelper;
 
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 ViewGroup container, Bundle savedInstanceState) {
@@ -34,17 +33,17 @@ public class ReaderFragment extends Fragment {
 		binding = FragmentReaderBinding.inflate(inflater, container, false);
 		View root = binding.getRoot();
 
-		bookDBHelper = new BookDBHelper(getContext());
+		BookDBHelper bookDBHelper = new BookDBHelper(getContext());
 		if (!bookDBHelper.isEmpty()) {
 			book = bookDBHelper.getLast();
-			SetBookRecycler(book);
+			SetBookRecycler();
 		}
 
 //		dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 		return root;
 	}
 
-	private void SetBookRecycler(BookModel book) {
+	private void SetBookRecycler() {
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext()
 				, RecyclerView.VERTICAL
 				, false);

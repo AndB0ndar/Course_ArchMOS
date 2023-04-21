@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.coursearchmos.DataBase.NoteDBHelper;
 import com.example.coursearchmos.databinding.ActivityAddNoteBinding;
 import com.example.coursearchmos.model.NoteModel;
 
 public class AddNoteActivity extends AppCompatActivity {
+	public static final String IDENTIFY = "com.example.coursearchmos.AddNoteActivity";
 	private ActivityAddNoteBinding binding;
 	private NoteDBHelper noteDBHelper;
 
@@ -22,14 +22,10 @@ public class AddNoteActivity extends AppCompatActivity {
 
 		noteDBHelper = new NoteDBHelper(AddNoteActivity.this);
 
-		binding.saveButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		binding.saveButton.setOnClickListener((v ->
 				saveAndBack(binding.title.getText().toString().trim()
-						, binding.text.getText().toString()
-				);
-			}
-		});
+						, binding.text.getText().toString())
+		));
 	}
 
 	private void saveAndBack(String title, String text) {
@@ -37,6 +33,7 @@ public class AddNoteActivity extends AppCompatActivity {
 		noteDBHelper.addOne(noteModel);
 
 		Intent intent = new Intent(this, MainActivity.class);
+		intent.putExtra(MainActivity.SELECTED_FRAGMENT, IDENTIFY);
 		startActivity(intent);
 	}
 

@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.coursearchmos.DataBase.NoteDBHelper;
 import com.example.coursearchmos.databinding.ActivityNoteBinding;
 import com.example.coursearchmos.model.NoteModel;
 
 public class NoteActivity extends AppCompatActivity {
+	public static final String IDENTIFY = "com.example.coursearchmos.NoteActivity";
 	private ActivityNoteBinding binding;
 	private NoteModel noteModel;
 
@@ -27,47 +27,36 @@ public class NoteActivity extends AppCompatActivity {
 		Bundle args = getIntent().getExtras();
 		if (args != null) {
 			noteModel = noteDBHelper.getById(args.getInt(NoteModel.class.getCanonicalName()));
-			// what is better to pass through the intent object or object id and get it from the database?
-//			noteModel = (NoteModel) args.getSerializable(NoteModel.class.getCanonicalName());
 			binding.title.setText(noteModel.getTitle());
 			binding.text.setText(noteModel.getText());
 		} else {
-			GoBack();
+			back();
 		}
 
-		binding.saveButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Save(binding.title.getText().toString(), binding.text.getText().toString());
-			}
-		});
-		binding.removeButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Remove();
-			}
-		});
+		binding.saveButton.setOnClickListener((v ->
+				save(binding.title.getText().toString(), binding.text.getText().toString())
+		));
+		binding.removeButton.setOnClickListener((v -> remove()));
 	}
 
-	private void GoBack() {
+	private void back() {
 		Intent intent = new Intent(this, MainActivity.class);
+		intent.putExtra(MainActivity.SELECTED_FRAGMENT, IDENTIFY);
 		startActivity(intent);
 	}
 
-	private void Save(String title, String text) {
+	private void save(String title, String text) {
 		noteModel.setTitle(title);
 		noteModel.setText(text);
 		noteDBHelper.updateOne(noteModel);
 
-		Intent intent = new Intent(this, MainActivity.class);
-		startActivity(intent);
+		back();
 	}
 
-	private void Remove() {
+	private void remove() {
 		noteDBHelper.deleteOne(noteModel);
 
-		Intent intent = new Intent(this, MainActivity.class);
-		startActivity(intent);
+		back();
 	}
 
 	@Override

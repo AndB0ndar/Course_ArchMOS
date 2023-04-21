@@ -3,15 +3,11 @@ package com.example.coursearchmos;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.util.DisplayMetrics;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.coursearchmos.DataBase.BookDBHelper;
@@ -22,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class BookActivity extends AppCompatActivity {
+	public static final String IDENTIFY = "com.example.coursearchmos.BookActivity";
 	private ActivityBookBinding binding;
 	private BookModel bookModel;
 	private BookDBHelper bookDBHelper;
@@ -68,22 +65,16 @@ public class BookActivity extends AppCompatActivity {
 			displayPage(curPage.getIndex());
 		}));
 
-		binding.back.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		binding.back.setOnClickListener((v -> {
 				Intent intent = new Intent(v.getContext(), MainActivity.class);
-				intent.putExtra(BookModel.class.getCanonicalName(), bookModel.getId());
+				intent.putExtra(MainActivity.SELECTED_FRAGMENT, IDENTIFY);
 				startActivity(intent);
-			}
-		});
-		binding.info.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
+			}));
+		binding.info.setOnClickListener((v -> {
 				String text = "Название:\n" + bookModel.getTitle()
 						+ "\nАвтор:\n" + bookModel.getInfo();
 				ShowInfo(text);
-			}
-		});
+			}));
 	}
 
 	@Override
@@ -149,12 +140,7 @@ public class BookActivity extends AppCompatActivity {
 		builder.setTitle("Информация о книге")
 				.setMessage(text)
 				.setCancelable(true)
-				.setPositiveButton("Хорошо", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				});
+				.setPositiveButton("Хорошо", (dialog, which) -> dialog.cancel());
 		AlertDialog dialog = builder.create();
 		dialog.show();
 	}

@@ -6,19 +6,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.example.coursearchmos.DataBase.BookDBHelper;
 import com.example.coursearchmos.model.BookModel;
 import com.example.coursearchmos.ui.library.LibraryFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.coursearchmos.databinding.ActivityMainBinding;
+import com.example.coursearchmos.ui.notes.NotesFragment;
 import com.example.coursearchmos.ui.reader.ReaderFragment;
 
 import java.io.File;
@@ -28,7 +29,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity implements FragmentListener {
-
+	public static final String SELECTED_FRAGMENT = "SELECTED_FRAGMENT";
 	private BookDBHelper bookDBHelper;
 	private ActivityMainBinding binding;
 
@@ -46,6 +47,11 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 		NavController navController = Navigation.findNavController(MainActivity.this
 				, R.id.nav_host_fragment_activity_main);
 		NavigationUI.setupWithNavController(binding.navView, navController);
+
+		Bundle args = getIntent().getExtras();
+		if (args != null) {
+			selectFragment(args.getString(MainActivity.SELECTED_FRAGMENT));
+		}
 	}
 
 	public void openFile() {
@@ -61,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 		super.onActivityResult(requestCode, resultCode, resultData);
 		if (requestCode == LibraryFragment.PICK_PDF_FILE
 				&& resultCode == Activity.RESULT_OK) {
-			Uri uri = null;
+			Uri uri;
 			if (resultData != null) {
 				uri = resultData.getData();
 
@@ -76,7 +82,11 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 				File file = new File(path);
 				if (!file.exists()) {
 					try (InputStream in = contentResolver.openInputStream(uri)) {
-						file.createNewFile();
+						boolean f_create = file.createNewFile();
+						if (!f_create) {
+							Log.d("LibraryActivity", "File NOT created");
+							return;
+						}
 						try (OutputStream out = new FileOutputStream(file)) {
 							byte[] buf = new byte[1024];
 							int len;
@@ -105,5 +115,26 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 	public void addNote() {
 		Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
 		startActivity(intent);
+	}
+
+	private void selectFragment(String selectFrg) {
+		Fragment fragment;
+		switch (selectFrg) {
+			case AddNoteActivity.IDENTIFY:
+			case NoteActivity.IDENTIFY:
+				fragment = new NotesFragment();
+				getSupportFragmentManager().beginTransaction()
+						.replace(R.id.nav_host_fragment_activity_main, fragment)
+						.addToBackStack(null)
+						.commit();
+				break;
+			case BookActivity.IDENTIFY:
+				fragment = new ReaderFragment();
+				getSupportFragmentManager().beginTransaction()
+						.replace(R.id.nav_host_fragment_activity_main, fragment)
+						.addToBackStack(null)
+						.commit();
+				break;
+		}
 	}
 }
