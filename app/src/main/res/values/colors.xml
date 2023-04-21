@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background">#363636</color>
     <color name="nev_bar">#80000000</color>
+    <color name="grey">#7f7679</color>
 </resources>

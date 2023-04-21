@@ -70,43 +70,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 			Uri uri;
 			if (resultData != null) {
 				uri = resultData.getData();
-
-				ContentResolver contentResolver = getContentResolver();
-
-				String[] tmp = uri.getPath().split("/");
-				String name = tmp[tmp.length - 1];
-				String path = getFilesDir().getPath() + '/' + name;
-
-				Log.d("file", path);
-
-				File file = new File(path);
-				if (!file.exists()) {
-					try (InputStream in = contentResolver.openInputStream(uri)) {
-						boolean f_create = file.createNewFile();
-						if (!f_create) {
-							Log.d("LibraryActivity", "File NOT created");
-							return;
-						}
-						try (OutputStream out = new FileOutputStream(file)) {
-							byte[] buf = new byte[1024];
-							int len;
-							while ((len = in.read(buf)) > 0) {
-								out.write(buf, 0, len);
-							}
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					bookDBHelper.addOne(new BookModel(-1
-							, path
-							, uri.getUserInfo()
-							, 0
-							, 0
-					));
-					Log.d("LibraryActivity", "File added in BD");
-				} else {
-					Log.d("LibraryActivity", "File NOT added in BD [EXISTS]");
-				}
+				bookDBHelper.addOne(uri);
 			}
 		}
 	}

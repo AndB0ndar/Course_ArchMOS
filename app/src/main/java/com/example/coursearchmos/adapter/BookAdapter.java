@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursearchmos.BookActivity;
+import com.example.coursearchmos.DataBase.BookDBHelper;
 import com.example.coursearchmos.R;
 //import com.example.coursearchmos.model.Book;
 import com.example.coursearchmos.model.BookModel;
@@ -28,12 +29,14 @@ import java.util.List;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 	private static final int HEIGHT = 399;
 	private static final double RATIO = 297.0 / 210.0;
-	Context context;
-	List<BookModel> books;
+	private Context context;
+	private List<BookModel> books;
+	private boolean fg_remove;
 
 	public BookAdapter(Context context, List<BookModel> books) {
 		this.context = context;
 		this.books = books;
+		this.fg_remove = false;
 	}
 
 	@NonNull
@@ -51,14 +54,17 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 		holder.bookTitle.setText(books.get(position).getTitle());
 		holder.bookAuthor.setText(books.get(position).getInfo());
 
-		holder.itemView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		holder.itemView.setOnClickListener((v) -> {
+			if (!fg_remove) {
 				Intent intent = new Intent(context, BookActivity.class);
 				intent.putExtra(BookModel.class.getCanonicalName()
 						, books.get(holder.getAdapterPosition()).getId()
 				);
 				context.startActivity(intent);
+			} else {
+				BookDBHelper bookDBHelper = new BookDBHelper(v.getContext());
+				bookDBHelper.deleteOne(books.get(position));
+				notifyDataSetChanged();
 			}
 		});
 	}
@@ -105,5 +111,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 			Log.d("BookAdapter", "Error open pdf document");
 		}
 		return null;
+	}
+
+	public void setFgRemove(boolean fg_remove) {
+		this.fg_remove = fg_remove;
 	}
 }

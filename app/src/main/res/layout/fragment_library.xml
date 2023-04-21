@@ -8,7 +8,7 @@
     android:background="@color/background"
     tools:context=".ui.library.LibraryFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -26,16 +26,32 @@
             android:text="@string/title_library"
             android:textColor="@color/white"
             android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/head"
+            app:layout_constraintTop_toTopOf="@+id/head" />
 
-        <LinearLayout
+        <ToggleButton
+            android:id="@+id/btn_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:textOn="@string/bt_done"
+            android:textOff="@string/bt_remove"
+            android:textColor="@color/grey"
+            style="?android:attr/borderlessButtonStyle"
+
+            app:layout_constraintBottom_toBottomOf="@+id/head"
+            app:layout_constraintEnd_toEndOf="@+id/head"
+            app:layout_constraintTop_toTopOf="@+id/head" />
+
+        <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="10dp"
-            android:background="@color/black"
-            android:orientation="vertical" />
-    </LinearLayout>
+            android:layout_height="1dp"
+            android:background="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@+id/lib_label"
+            android:layout_marginHorizontal="10dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/libraryRecycler"
@@ -63,4 +79,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/libraryRecycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

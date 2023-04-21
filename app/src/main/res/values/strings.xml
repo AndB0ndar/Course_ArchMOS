@@ -15,6 +15,7 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="title_activity_settings2">SettingsActivity2</string>
 
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -31,11 +32,13 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="et_note_title">Заголовок</string>
     <string name="et_note_text">Остновной текст</string>
     <string name="bt_save">Сохранить</string>
     <string name="bt_remove">Удалить</string>
+    <string name="bt_done">Готово</string>
     <string name="bt_edited">Редоктировать</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
