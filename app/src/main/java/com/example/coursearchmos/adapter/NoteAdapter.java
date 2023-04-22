@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursearchmos.NoteActivity;
@@ -35,15 +37,12 @@ public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 	@Override
 	public void onBindViewHolder(BookAdapter.BookViewHolder holder, int position) {
 		holder.bookTitle.setText(notes.get(position).getTitle());
-		holder.itemView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(context, NoteActivity.class);
-				intent.putExtra(NoteModel.class.getCanonicalName()
-						, notes.get(holder.getAdapterPosition()).getId()
-				);
-				context.startActivity(intent);
-			}
+		holder.itemView.setOnClickListener((v) -> {
+			Intent intent = new Intent(context, NoteActivity.class);
+			intent.putExtra(NoteModel.class.getCanonicalName()
+					, notes.get(holder.getAdapterPosition()).getId()
+			);
+			context.startActivity(intent);
 		});
 	}
 
@@ -57,7 +56,6 @@ public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 		public NoteViewHolder(@NonNull View itemView) {
 			super(itemView);
-
 			noteTitle = itemView.findViewById(R.id.title);
 		}
 	}

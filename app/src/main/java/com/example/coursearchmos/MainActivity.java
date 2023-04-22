@@ -1,37 +1,29 @@
 package com.example.coursearchmos;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.coursearchmos.DataBase.BookDBHelper;
-import com.example.coursearchmos.model.BookModel;
 import com.example.coursearchmos.ui.library.LibraryFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.coursearchmos.databinding.ActivityMainBinding;
 import com.example.coursearchmos.ui.notes.NotesFragment;
 import com.example.coursearchmos.ui.reader.ReaderFragment;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.example.coursearchmos.ui.setting.SettingFragment;
 
 public class MainActivity extends AppCompatActivity implements FragmentListener {
 	public static final String SELECTED_FRAGMENT = "SELECTED_FRAGMENT";
 	private BookDBHelper bookDBHelper;
+//	private NavController navController;
 	private ActivityMainBinding binding;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +33,41 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 		setContentView(binding.getRoot());
 		bookDBHelper = new BookDBHelper(MainActivity.this);
 
-		AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-				R.id.navigation_setting, R.id.navigation_reader, R.id.navigation_library, R.id.navigation_notes)
-				.build();
-		NavController navController = Navigation.findNavController(MainActivity.this
-				, R.id.nav_host_fragment_activity_main);
-		NavigationUI.setupWithNavController(binding.navView, navController);
+//		AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+//				R.id.navigation_setting
+//				, R.id.navigation_reader
+//				, R.id.navigation_library
+//				, R.id.navigation_notes
+//		).build();
+//		navController = Navigation.findNavController(MainActivity.this
+//				, R.id.nav_host_fragment_activity_main
+//		);
+//		NavigationUI.setupWithNavController(binding.navView, navController);
 
+		binding.navView.setOnItemSelectedListener((item) ->{
+			switch (item.getItemId()) {
+				case R.id.navigation_setting:
+					replaceFragment(new SettingFragment());
+					break;
+				case R.id.navigation_reader:
+					replaceFragment(new ReaderFragment());
+					break;
+				case R.id.navigation_library:
+					replaceFragment(new LibraryFragment());
+					break;
+				case R.id.navigation_notes:
+					replaceFragment(new NotesFragment());
+					break;
+			}
+			return true;
+		});
+
+		binding.navView.getMenu().setGroupCheckable(0, false, true);
 		Bundle args = getIntent().getExtras();
-		if (args != null) {
+		if (args != null)
 			selectFragment(args.getString(MainActivity.SELECTED_FRAGMENT));
-		}
+		else
+			replaceFragment(new ReaderFragment());
 	}
 
 	public void openFile() {
@@ -82,23 +98,22 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 	}
 
 	private void selectFragment(String selectFrg) {
-		Fragment fragment;
 		switch (selectFrg) {
 			case AddNoteActivity.IDENTIFY:
 			case NoteActivity.IDENTIFY:
-				fragment = new NotesFragment();
-				getSupportFragmentManager().beginTransaction()
-						.replace(R.id.nav_host_fragment_activity_main, fragment)
-						.addToBackStack(null)
-						.commit();
+				replaceFragment(new NotesFragment());
 				break;
 			case BookActivity.IDENTIFY:
-				fragment = new ReaderFragment();
-				getSupportFragmentManager().beginTransaction()
-						.replace(R.id.nav_host_fragment_activity_main, fragment)
-						.addToBackStack(null)
-						.commit();
+				replaceFragment(new ReaderFragment());
 				break;
 		}
+	}
+
+	public void replaceFragment(Fragment fragment) {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.replace(R.id.fragment_layout, fragment);
+		fragmentTransaction.addToBackStack(null);
+		fragmentTransaction.commit();
 	}
 }

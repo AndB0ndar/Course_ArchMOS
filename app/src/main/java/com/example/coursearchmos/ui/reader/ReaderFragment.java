@@ -41,6 +41,7 @@ public class ReaderFragment extends Fragment {
 		BookDBHelper bookDBHelper = new BookDBHelper(getContext());
 		if (!bookDBHelper.isEmpty()) {
 			book = bookDBHelper.getLast();
+			Log.d("BookId", String.valueOf(book.getId()));
 			SetBookRecycler();
 		}
 		setNoteRecycler();
@@ -66,7 +67,7 @@ public class ReaderFragment extends Fragment {
 				, RecyclerView.VERTICAL
 				, false);
 		binding.notesRecycler.setLayoutManager(layoutManager);
-		List<NoteModel> notes = noteDBHelper.getAllByBook(0);
+		List<NoteModel> notes = noteDBHelper.getAllByBook(book.getId());
 		noteAdapter = new NoteAdapter(getContext(), notes);
 		binding.notesRecycler.setAdapter(noteAdapter);
 	}

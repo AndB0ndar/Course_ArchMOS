@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookDBHelper extends DBHelper {
 	public static final String NOTE_TABLE = "BOOK_TABLE";
@@ -212,5 +214,27 @@ public class BookDBHelper extends DBHelper {
 		db.close();
 
 		return ret == 0;
+	}
+
+	public Map<String, Integer> getTitles() {
+		Map<String, Integer> map = new HashMap<>();
+
+		String queryString = "SELECT " + COLUMN_ID + ", " + COLUMN_BOOK_PATH + " FROM " + NOTE_TABLE;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(queryString, null);
+		if (cursor.moveToFirst()){
+			do {
+				int id = cursor.getInt(0);
+				String[] s = cursor.getString(1).split("/");
+				String title = s[s.length - 1].split("\\.")[0];
+
+				map.put(title, id);
+			} while (cursor.moveToNext());
+		}
+
+		cursor.close();
+		db.close();
+
+		return map;
 	}
 }

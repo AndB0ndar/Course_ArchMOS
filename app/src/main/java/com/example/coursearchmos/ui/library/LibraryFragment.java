@@ -49,7 +49,7 @@ public class LibraryFragment extends Fragment {
 		binding = FragmentLibraryBinding.inflate(inflater, container, false);
 		View root = binding.getRoot();
 
-		binding.btnAdd.setOnClickListener((v -> { fragmentListener.openFile(); }));
+		binding.btnAdd.setOnClickListener((v -> fragmentListener.openFile()));
 
 		bookDBHelper = new BookDBHelper(getContext());
 		if (!bookDBHelper.isEmpty()) {
@@ -57,9 +57,8 @@ public class LibraryFragment extends Fragment {
 			SetBookRecycler();
 		}
 
-		binding.btnRemove.setOnCheckedChangeListener((buttonView, isChecked) -> {
-				bookAdapter.setFgRemove(isChecked);
-		});
+		binding.btnRemove.setOnCheckedChangeListener((buttonView, isChecked)
+				-> bookAdapter.setFgRemove(isChecked));
 
 		return root;
 	}
