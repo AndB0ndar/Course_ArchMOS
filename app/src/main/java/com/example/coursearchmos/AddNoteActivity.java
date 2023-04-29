@@ -23,6 +23,7 @@ public class AddNoteActivity extends AppCompatActivity {
 	private NoteDBHelper noteDBHelper;
 	private BookDBHelper bookDBHelper;
 	private int idBook = -1;
+	private Map<String, Integer> titles;
 
 
 	@Override
@@ -36,7 +37,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
 		binding.saveButton.setOnClickListener((v -> saveAndBack()));
 
-		Map<String, Integer> titles = new HashMap<>();
+		titles = new HashMap<>();
 		titles.put("", -1);
 		titles.putAll(bookDBHelper.getTitles());
 
@@ -58,6 +59,16 @@ public class AddNoteActivity extends AppCompatActivity {
 					}
 				};
 		binding.spinnerBooks.setOnItemSelectedListener(itemSelectedListener);
+
+		Bundle args = getIntent().getExtras();
+		if (!args.isEmpty()) {
+			if (args.containsKey(BookActivity.class.getCanonicalName())) {
+				String title = args.getString(BookActivity.class.getCanonicalName());
+				idBook = titles.get(title);
+				int ind = findTitleIndex(title);
+				binding.spinnerBooks.setSelection(ind);
+			}
+		}
 	}
 
 	private void saveAndBack() {
@@ -71,6 +82,16 @@ public class AddNoteActivity extends AppCompatActivity {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.putExtra(MainActivity.SELECTED_FRAGMENT, IDENTIFY);
 		startActivity(intent);
+	}
+
+	private int findTitleIndex(String target)	{
+		String[] lst = titles.keySet().toArray(new String[0]);
+		for (int i = 0; i < lst.length; i++) {
+			if (lst[i].equals(target)) {
+				return i;
+			}
+		}
+		return 0;
 	}
 
 	@Override

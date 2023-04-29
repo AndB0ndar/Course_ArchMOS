@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
@@ -24,7 +23,7 @@ import java.io.IOException;
 public class BookActivity extends AppCompatActivity {
 	public static final String IDENTIFY = "com.example.coursearchmos.BookActivity";
 	private ActivityBookBinding binding;
-	private BookModel bookModel;
+	private BookModel book;
 	private BookDBHelper bookDBHelper;
 
 	private String path;
@@ -46,10 +45,10 @@ public class BookActivity extends AppCompatActivity {
 		bookDBHelper = new BookDBHelper(BookActivity.this);
 
 		Bundle args = getIntent().getExtras();
-		bookModel = bookDBHelper.getById(args.getInt(BookModel.class.getCanonicalName()));
+		book = bookDBHelper.getById(args.getInt(BookModel.class.getCanonicalName()));
 
-		path = bookModel.getPath();
-		currentPage = bookModel.getLastCurPage();
+		path = book.getPath();
+		currentPage = book.getLastCurPage();
 
 		binding.btnPrevious.setOnClickListener((v -> {
 			int index = curPage.getIndex() - 1;
@@ -80,19 +79,29 @@ public class BookActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		int id = item.getItemId();
+		Intent intent;
 		switch (id){
 			case android.R.id.home:
-				Intent intent = new Intent(BookActivity.this, MainActivity.class);
+				intent = new Intent(BookActivity.this, MainActivity.class);
 				intent.putExtra(MainActivity.SELECTED_FRAGMENT, IDENTIFY);
 				startActivity(intent);
 				return true;
 			case R.id.info:
-				String text = "Название:\n" + bookModel.getTitle()
-						+ "\nАвтор:\n" + bookModel.getInfo();
+				String text = "Название:\n" + book.getTitle()
+						+ "\nПурь:\n" + book.getPath();
 				ShowInfo(text);
 				return true;
+			case R.id.add_note:
+				intent = new Intent(BookActivity.this, AddNoteActivity.class);
+				intent.putExtra(BookActivity.class.getCanonicalName(), book.getTitle());
+				startActivity(intent);
+				return true;
+			case R.id.bookmarks:
+//				intent = new Intent(BookActivity.this, AddNoteActivity.class);
+//				intent.putExtra(BookActivity.class.getCanonicalName(), book.getTitle());
+//				startActivity(intent);
+				return true;
 		}
-		//headerView.setText(item.getTitle())
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -103,7 +112,7 @@ public class BookActivity extends AppCompatActivity {
 			openPdfRenderer();
 			displayPage(currentPage);
 		} catch (Exception e) {
-			Toast.makeText(this, "PDF-файл защищен паролем.", Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
 		}
 	}
 
@@ -168,10 +177,10 @@ public class BookActivity extends AppCompatActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		int time = bookModel.getTime() + (int) ((System.currentTimeMillis() - timeStart) / 1000);
-		bookModel.setTime(time);
-		bookModel.setLastCurPage(curPage.getIndex());
-		bookDBHelper.updateOne(bookModel);
+		int time = book.getTime() + (int) ((System.currentTimeMillis() - timeStart) / 1000);
+		book.setTime(time);
+		book.setLastCurPage(curPage.getIndex());
+		bookDBHelper.updateOne(book);
 	}
 
 	@Override public void onStop() {

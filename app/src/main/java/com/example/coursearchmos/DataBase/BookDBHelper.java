@@ -129,13 +129,6 @@ public class BookDBHelper extends DBHelper {
 		return f != -1;
 	}
 
-	public boolean isExistByPath(BookModel bookModel) {
-		if (bookModel == null)
-			return false;
-		// TODO: add code
-		return false;
-	}
-
 	public List<BookModel> getAll() {
 		List<BookModel> returnList = new ArrayList<>();
 

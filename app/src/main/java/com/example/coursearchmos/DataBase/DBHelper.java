@@ -22,6 +22,12 @@ class DBHelper extends SQLiteOpenHelper {
 					+ BookDBHelper.COLUMN_BOOK_LAST_CUR_PAGE + " INTEGER, "
 					+ BookDBHelper.COLUMN_BOOK_PAGE_COUNT + " INTEGER, "
 					+ BookDBHelper.COLUMN_BOOK_TIME + " INTEGER)";
+	private static final String CREATE_TABLE_BOOKMARK =
+			"CREATE TABLE " + BookMarksDBHelper.BOOKMARKS_TABLE
+					+ " (" + BookMarksDBHelper.COLUMN_ID
+					+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+					+ BookMarksDBHelper.COLUMN_ID_BOOK + " INTEGER, "
+					+ BookMarksDBHelper.COLUMN_NUMBER_PAGE + " INTEGER)";
 
 
 	public DBHelper(Context context) {
@@ -32,6 +38,7 @@ class DBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(CREATE_TABLE_NOTES);
 		db.execSQL(CREATE_TABLE_BOOKS);
+		db.execSQL(CREATE_TABLE_BOOKMARK);
 	}
 
 	@Override

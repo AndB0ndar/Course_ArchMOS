@@ -4,4 +4,12 @@
         android:id="@+id/info"
         android:orderInCategory="1"
         android:title="Инфо" />
+    <item
+        android:id="@+id/add_note"
+        android:orderInCategory="2"
+        android:title="Добавить заметку" />
+    <item
+        android:id="@+id/bookmarks"
+        android:orderInCategory="3"
+        android:title="Закладки" />
 </menu>
