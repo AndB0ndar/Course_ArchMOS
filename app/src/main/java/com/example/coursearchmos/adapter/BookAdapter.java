@@ -52,7 +52,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 	public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
 		holder.bookImage.setImageBitmap(getImgBitmap(books.get(position).getPath()));
 		holder.bookTitle.setText(books.get(position).getTitle());
-		holder.bookAuthor.setText(books.get(position).getInfo());
 
 		holder.itemView.setOnClickListener((v) -> {
 			if (!fg_remove) {
@@ -64,6 +63,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 			} else {
 				BookDBHelper bookDBHelper = new BookDBHelper(v.getContext());
 				bookDBHelper.deleteOne(books.get(position));
+				books.remove(position);
 				notifyDataSetChanged();
 			}
 		});
@@ -75,16 +75,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 	}
 
 	public static final class BookViewHolder extends RecyclerView.ViewHolder {
-
 		ImageView bookImage;
-		TextView bookTitle, bookAuthor;
+		TextView bookTitle;
 
 		public BookViewHolder(@NonNull View itemView) {
 			super(itemView);
-
 			bookImage = itemView.findViewById(R.id.image);
 			bookTitle = itemView.findViewById(R.id.title);
-			bookAuthor = itemView.findViewById(R.id.author);
 		}
 	}
 

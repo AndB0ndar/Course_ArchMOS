@@ -1,13 +1,17 @@
 package com.example.coursearchmos;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.coursearchmos.DataBase.BookDBHelper;
@@ -64,16 +68,32 @@ public class BookActivity extends AppCompatActivity {
 			displayPage(curPage.getIndex());
 		}));
 
-		binding.back.setOnClickListener((v -> {
-				Intent intent = new Intent(v.getContext(), MainActivity.class);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.book_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+		int id = item.getItemId();
+		switch (id){
+			case android.R.id.home:
+				Intent intent = new Intent(BookActivity.this, MainActivity.class);
 				intent.putExtra(MainActivity.SELECTED_FRAGMENT, IDENTIFY);
 				startActivity(intent);
-			}));
-		binding.info.setOnClickListener((v -> {
+				return true;
+			case R.id.info:
 				String text = "Название:\n" + bookModel.getTitle()
 						+ "\nАвтор:\n" + bookModel.getInfo();
 				ShowInfo(text);
-			}));
+				return true;
+		}
+		//headerView.setText(item.getTitle())
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

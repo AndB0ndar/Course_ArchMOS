@@ -1,58 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
-
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/white"
-        app:srcCompat="@drawable/ic_book" />
+    card_view:cardBackgroundColor="@android:color/transparent"
+    android:layout_gravity="center"
+    android:layout_margin="5dp"
+    app:cardElevation="0dp">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toTopOf="@+id/image">
-        <TextView
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Название:"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/white"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_book" />
+
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            android:textColor="@color/white"/>
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Автор:"
             android:textColor="@color/white"
-            android:textSize="14sp" />
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            android:textColor="@color/white"/>
+            android:textAlignment="center"
+            android:textSize="16sp"/>
 
     </LinearLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
