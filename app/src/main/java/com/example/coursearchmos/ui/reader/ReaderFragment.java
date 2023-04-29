@@ -32,24 +32,22 @@ public class ReaderFragment extends Fragment {
 
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 ViewGroup container, Bundle savedInstanceState) {
-		ReaderViewModel dashboardViewModel =
-				new ViewModelProvider(this).get(ReaderViewModel.class);
-
 		binding = FragmentReaderBinding.inflate(inflater, container, false);
 		View root = binding.getRoot();
 
 		BookDBHelper bookDBHelper = new BookDBHelper(getContext());
 		if (!bookDBHelper.isEmpty()) {
 			book = bookDBHelper.getLast();
-			Log.d("BookId", String.valueOf(book.getId()));
-			SetBookRecycler();
+			setBookRecycler();
+			binding.countPages.setMax(book.getPageCount());
 		}
+		bookDBHelper.close();
 		setNoteRecycler();
 
 		return root;
 	}
 
-	private void SetBookRecycler() {
+	private void setBookRecycler() {
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext()
 				, RecyclerView.HORIZONTAL
 				, false);
@@ -62,14 +60,25 @@ public class ReaderFragment extends Fragment {
 
 
 	private void setNoteRecycler() {
-		NoteDBHelper noteDBHelper = new NoteDBHelper(getContext());
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext()
 				, RecyclerView.VERTICAL
 				, false);
 		binding.notesRecycler.setLayoutManager(layoutManager);
-		List<NoteModel> notes = noteDBHelper.getAllByBook(book.getId());
-		noteAdapter = new NoteAdapter(getContext(), notes);
-		binding.notesRecycler.setAdapter(noteAdapter);
+		NoteDBHelper noteDBHelper = new NoteDBHelper(getContext());
+		if (!noteDBHelper.isEmpty()) {
+			List<NoteModel> notes = noteDBHelper.getAllByBook(book.getId());
+			if (!notes.isEmpty()) {
+				noteAdapter = new NoteAdapter(getContext(), notes);
+				binding.notesRecycler.setAdapter(noteAdapter);
+			}
+		}
+		noteDBHelper.close();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		binding.countPages.setProgress(book.getLastCurPage());
 	}
 
 	@Override

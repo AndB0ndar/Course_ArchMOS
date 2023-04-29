@@ -126,4 +126,19 @@ public class NoteDBHelper extends DBHelper {
 		return returnList;
 	}
 
+	public boolean isEmpty() {
+		String queryString = "SELECT EXISTS (SELECT 1 FROM "  + NOTE_TABLE + ")";
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(queryString, null);
+		int ret = 0;
+		if (cursor.moveToFirst()){
+			ret = cursor.getInt(0);
+		}
+
+		cursor.close();
+		db.close();
+
+		return ret == 0;
+	}
+
 }

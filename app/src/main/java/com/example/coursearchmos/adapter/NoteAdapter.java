@@ -18,7 +18,7 @@ import com.example.coursearchmos.model.NoteModel;
 
 import java.util.List;
 
-public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 	private Context context;
 	private List<NoteModel> notes;
 
@@ -29,14 +29,14 @@ public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 	@NonNull
 	@Override
-	public BookAdapter.BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		View bookItem = LayoutInflater.from(context).inflate(R.layout.note_item, parent, false);
-		return new BookAdapter.BookViewHolder(bookItem);
+	public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+		View noteItem = LayoutInflater.from(context).inflate(R.layout.note_item, parent, false);
+		return new NoteViewHolder(noteItem);
 	}
 
 	@Override
-	public void onBindViewHolder(BookAdapter.BookViewHolder holder, int position) {
-		holder.bookTitle.setText(notes.get(position).getTitle());
+	public void onBindViewHolder(NoteViewHolder holder, int position) {
+		holder.noteTitle.setText(notes.get(position).getTitle());
 		holder.itemView.setOnClickListener((v) -> {
 			Intent intent = new Intent(context, NoteActivity.class);
 			intent.putExtra(NoteModel.class.getCanonicalName()
@@ -51,7 +51,7 @@ public class NoteAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 		return notes.size();
 	}
 
-	private static final class NoteViewHolder extends RecyclerView.ViewHolder {
+	public static final class NoteViewHolder extends RecyclerView.ViewHolder {
 		TextView noteTitle;
 
 		public NoteViewHolder(@NonNull View itemView) {

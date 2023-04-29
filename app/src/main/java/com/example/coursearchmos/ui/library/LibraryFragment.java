@@ -27,7 +27,7 @@ public class LibraryFragment extends Fragment {
 
 	protected BookAdapter bookAdapter;
 	private BookDBHelper bookDBHelper;
-	static List<BookModel> books = new ArrayList<>();
+	static List<BookModel> books;
 
 	private FragmentLibraryBinding binding;
 
@@ -52,10 +52,11 @@ public class LibraryFragment extends Fragment {
 		binding.btnAdd.setOnClickListener((v -> fragmentListener.openFile()));
 
 		bookDBHelper = new BookDBHelper(getContext());
-		if (!bookDBHelper.isEmpty()) {
+		if (!bookDBHelper.isEmpty())
 			books = bookDBHelper.getAll();
-			SetBookRecycler();
-		}
+		else
+			books = new ArrayList<>();
+		setBookRecycler();
 
 		binding.btnRemove.setOnCheckedChangeListener((buttonView, isChecked)
 				-> bookAdapter.setFgRemove(isChecked));
@@ -63,7 +64,7 @@ public class LibraryFragment extends Fragment {
 		return root;
 	}
 
-	private void SetBookRecycler() {
+	private void setBookRecycler() {
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext()
 				, RecyclerView.VERTICAL
 				, false);
@@ -77,15 +78,15 @@ public class LibraryFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 
-		books = bookDBHelper.getAll();
-		bookAdapter.setBooks(books);
+		List<BookModel> tmp_books = bookDBHelper.getAll();
+		if (!books.equals(tmp_books))
+			bookAdapter.setBooks(tmp_books);
 	}
 
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 		binding = null;
-
 		bookDBHelper.close();
 	}
 }

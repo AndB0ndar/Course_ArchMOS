@@ -14,12 +14,13 @@ class DBHelper extends SQLiteOpenHelper {
 					+ NoteDBHelper.COLUMN_NOTE_TEXT + " TEXT, "
 					+ NoteDBHelper.COLUMN_NOTE_ID_BOOK + " INTEGER)";
 	private static final String CREATE_TABLE_BOOKS =
-			"CREATE TABLE " + BookDBHelper.NOTE_TABLE
+			"CREATE TABLE " + BookDBHelper.BOOK_TABLE
 					+ " (" + BookDBHelper.COLUMN_ID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ BookDBHelper.COLUMN_BOOK_PATH + " TEXT, "
 					+ BookDBHelper.COLUMN_BOOK_INFO + " TEXT, "
-					+ BookDBHelper.COLUMN_BOOK_LAST_CUR_PAGE + " TEXT, "
+					+ BookDBHelper.COLUMN_BOOK_LAST_CUR_PAGE + " INTEGER, "
+					+ BookDBHelper.COLUMN_BOOK_PAGE_COUNT + " INTEGER, "
 					+ BookDBHelper.COLUMN_BOOK_TIME + " INTEGER)";
 
 

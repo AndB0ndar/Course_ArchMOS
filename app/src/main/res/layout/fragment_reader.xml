@@ -52,6 +52,29 @@
             android:id="@+id/readerRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="10dp" >
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Прочтено"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black"
+            android:layout_marginHorizontal="10dp"
+            android:paddingBottom="10dp"/>
+
+        <ProgressBar
+            android:id="@+id/countPages"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:paddingBottom="10dp" />
 
         <TextView

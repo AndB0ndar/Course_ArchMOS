@@ -61,7 +61,6 @@ public class NotesFragment extends Fragment {
 
 		binding.btnAdd.setOnClickListener((v -> { fragmentListener.addNote();}));
 
-//		notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 		return root;
 	}
 

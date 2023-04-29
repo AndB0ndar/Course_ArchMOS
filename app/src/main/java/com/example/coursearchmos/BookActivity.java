@@ -47,7 +47,6 @@ public class BookActivity extends AppCompatActivity {
 		path = bookModel.getPath();
 		currentPage = bookModel.getLastCurPage();
 
-		// устанавливаем слушатели на кнопки
 		binding.btnPrevious.setOnClickListener((v -> {
 			int index = curPage.getIndex() - 1;
 			displayPage(index);
@@ -103,12 +102,9 @@ public class BookActivity extends AppCompatActivity {
 	private void displayPage(int index) {
 		if (pdfRenderer.getPageCount() <= index)
 			return;
-		// закрываем текущую страницу
 		if (curPage != null)
 			curPage.close();
-		// открываем нужную страницу
 		curPage = pdfRenderer.openPage(index);
-		// определяем размеры Bitmap
 		int newWidth =
 				(int) (getResources().getDisplayMetrics().widthPixels * curPage.getWidth() / 72
 						* currentZoomLevel / 40);
@@ -125,9 +121,7 @@ public class BookActivity extends AppCompatActivity {
 
 		curPage.render(bitmap, null, null
 				, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-		// отображаем результат рендера
 		binding.imgView.setImageBitmap(bitmap);
-		// проверяем, нужно ли делать кнопки недоступными
 		int pageCount = pdfRenderer.getPageCount();
 		binding.btnPrevious.setEnabled(0 != index);
 		binding.btnNext.setEnabled(index + 1 < pageCount);
@@ -156,6 +150,8 @@ public class BookActivity extends AppCompatActivity {
 		super.onPause();
 		int time = bookModel.getTime() + (int) ((System.currentTimeMillis() - timeStart) / 1000);
 		bookModel.setTime(time);
+		bookModel.setLastCurPage(curPage.getIndex());
+		bookDBHelper.updateOne(bookModel);
 	}
 
 	@Override public void onStop() {
@@ -165,8 +161,6 @@ public class BookActivity extends AppCompatActivity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		bookModel.setLastCurPage(curPage.getIndex());
-		bookDBHelper.updateOne(bookModel);
 		bookDBHelper.close();
 	}
 
