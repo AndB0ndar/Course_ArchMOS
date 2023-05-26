@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.coursearchmos.DataBase.BookDBHelper;
+import com.example.coursearchmos.DataBase.BookDBAdapter;
 import com.example.coursearchmos.databinding.ActivityBookBinding;
 import com.example.coursearchmos.model.BookModel;
 
@@ -22,9 +22,11 @@ import java.io.IOException;
 
 public class BookActivity extends AppCompatActivity {
 	public static final String IDENTIFY = "com.example.coursearchmos.BookActivity";
+	public static final String BOOK_ID = "com.example.coursearchmos.BookActivity_BOOK_ID";
+	public static final String CURRENT_PAGE = "com.example.coursearchmos.BookActivity_CURRENT_PAGE";
 	private ActivityBookBinding binding;
 	private BookModel book;
-	private BookDBHelper bookDBHelper;
+	private BookDBAdapter bookDBHelper;
 
 	private String path;
 	private int currentPage = 0;
@@ -42,13 +44,16 @@ public class BookActivity extends AppCompatActivity {
 		binding = ActivityBookBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		bookDBHelper = new BookDBHelper(BookActivity.this);
+		bookDBHelper = new BookDBAdapter(BookActivity.this);
 
 		Bundle args = getIntent().getExtras();
-		book = bookDBHelper.getById(args.getInt(BookModel.class.getCanonicalName()));
-
-		path = book.getPath();
-		currentPage = book.getLastCurPage();
+		if (args != null) {
+			int id = args.getInt(BookActivity.BOOK_ID);
+			book = bookDBHelper.getById(id);
+			path = book.getPath();
+			currentPage = (args.containsKey(CURRENT_PAGE))
+					? args.getInt(CURRENT_PAGE) : book.getLastCurPage();
+		}
 
 		binding.btnPrevious.setOnClickListener((v -> {
 			int index = curPage.getIndex() - 1;
@@ -73,6 +78,7 @@ public class BookActivity extends AppCompatActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.book_menu, menu);
+		getSupportActionBar().setTitle(book.getTitle());
 		return true;
 	}
 
@@ -97,9 +103,10 @@ public class BookActivity extends AppCompatActivity {
 				startActivity(intent);
 				return true;
 			case R.id.bookmarks:
-//				intent = new Intent(BookActivity.this, AddNoteActivity.class);
-//				intent.putExtra(BookActivity.class.getCanonicalName(), book.getTitle());
-//				startActivity(intent);
+				intent = new Intent(BookActivity.this, BookMarksActivity.class);
+				intent.putExtra(BOOK_ID, book.getId());
+				intent.putExtra(CURRENT_PAGE, currentPage);
+				startActivity(intent);
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -183,8 +190,9 @@ public class BookActivity extends AppCompatActivity {
 		bookDBHelper.updateOne(book);
 	}
 
-	@Override public void onStop() {
-		super.onStop();
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 		try {
 			closePdfRenderer();
 		} catch (IOException e) {

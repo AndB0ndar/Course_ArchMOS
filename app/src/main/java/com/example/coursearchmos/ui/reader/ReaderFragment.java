@@ -1,19 +1,17 @@
 package com.example.coursearchmos.ui.reader;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.coursearchmos.DataBase.BookDBHelper;
-import com.example.coursearchmos.DataBase.NoteDBHelper;
+import com.example.coursearchmos.DataBase.BookDBAdapter;
+import com.example.coursearchmos.DataBase.NoteDBAdapter;
 import com.example.coursearchmos.adapter.BookAdapter;
 import com.example.coursearchmos.adapter.NoteAdapter;
 import com.example.coursearchmos.databinding.FragmentReaderBinding;
@@ -35,7 +33,7 @@ public class ReaderFragment extends Fragment {
 		binding = FragmentReaderBinding.inflate(inflater, container, false);
 		View root = binding.getRoot();
 
-		BookDBHelper bookDBHelper = new BookDBHelper(getContext());
+		BookDBAdapter bookDBHelper = new BookDBAdapter(getContext());
 		if (!bookDBHelper.isEmpty()) {
 			book = bookDBHelper.getLast();
 			setBookRecycler();
@@ -64,7 +62,7 @@ public class ReaderFragment extends Fragment {
 				, RecyclerView.VERTICAL
 				, false);
 		binding.notesRecycler.setLayoutManager(layoutManager);
-		NoteDBHelper noteDBHelper = new NoteDBHelper(getContext());
+		NoteDBAdapter noteDBHelper = new NoteDBAdapter(getContext());
 		if (!noteDBHelper.isEmpty()) {
 			List<NoteModel> notes = noteDBHelper.getAllByBook(book.getId());
 			if (!notes.isEmpty()) {
@@ -78,7 +76,8 @@ public class ReaderFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		binding.countPages.setProgress(book.getLastCurPage());
+		if (book != null)
+			binding.countPages.setProgress(book.getLastCurPage());
 	}
 
 	@Override

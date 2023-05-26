@@ -1,6 +1,5 @@
 package com.example.coursearchmos.DataBase;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BookDBHelper extends DBHelper {
+public class BookDBAdapter {
 	public static final String BOOK_TABLE = "BOOK_TABLE";
 	public static final String COLUMN_BOOK_PATH = "BOOK_PATH";
 	public static final String COLUMN_BOOK_INFO = "BOOK_INFO";
@@ -32,9 +31,10 @@ public class BookDBHelper extends DBHelper {
 	public static final String COLUMN_ID = "ID";
 
 	private Context context;
+	private DBHelper dbHelper;
 
-	public BookDBHelper(Context context) {
-		super(context);
+	public BookDBAdapter(Context context) {
+		dbHelper = new DBHelper(context.getApplicationContext());
 		this.context = context;
 	}
 
@@ -78,7 +78,7 @@ public class BookDBHelper extends DBHelper {
 					, 0
 			);
 
-			SQLiteDatabase db = this.getWritableDatabase();
+			SQLiteDatabase db = dbHelper.getWritableDatabase();
 			ContentValues cv = new ContentValues();
 
 			cv.put(COLUMN_BOOK_PATH, bookModel.getPath());
@@ -108,13 +108,13 @@ public class BookDBHelper extends DBHelper {
 		}
 
 		String queryString = "DELETE FROM " + BOOK_TABLE + " WHERE " + COLUMN_ID + " = " + bookModel.getId();
-		SQLiteDatabase db = this.getWritableDatabase();
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		return cursor.moveToFirst();
 	}
 
 	public boolean updateOne(BookModel bookModel) {
-		SQLiteDatabase db = this.getWritableDatabase();
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		ContentValues cv = new ContentValues();
 
 		cv.put(COLUMN_ID, bookModel.getId());
@@ -133,7 +133,7 @@ public class BookDBHelper extends DBHelper {
 		List<BookModel> returnList = new ArrayList<>();
 
 		String queryString = "SELECT * FROM " + BOOK_TABLE;
-		SQLiteDatabase db = this.getReadableDatabase();
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
 			// loop through the cursor and create new Note object
@@ -160,7 +160,7 @@ public class BookDBHelper extends DBHelper {
 		BookModel bookModel = null;
 
 		String queryString = "SELECT * FROM " + BOOK_TABLE + " WHERE " + COLUMN_ID + " = " + id;
-		SQLiteDatabase db = this.getReadableDatabase();
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
 			int bookID = cursor.getInt(0);
@@ -183,7 +183,7 @@ public class BookDBHelper extends DBHelper {
 		BookModel bookModel = null;
 
 		String queryString = "SELECT *, max(" + COLUMN_BOOK_TIME + ") FROM " + BOOK_TABLE;
-		SQLiteDatabase db = this.getReadableDatabase();
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
 			int bookID = cursor.getInt(0);
@@ -204,7 +204,7 @@ public class BookDBHelper extends DBHelper {
 
 	public boolean isEmpty() {
 		String queryString = "SELECT EXISTS (SELECT 1 FROM "  + BOOK_TABLE + ")";
-		SQLiteDatabase db = this.getReadableDatabase();
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		int ret = 0;
 		if (cursor.moveToFirst()){
@@ -221,7 +221,7 @@ public class BookDBHelper extends DBHelper {
 		Map<String, Integer> map = new HashMap<>();
 
 		String queryString = "SELECT " + COLUMN_ID + ", " + COLUMN_BOOK_PATH + " FROM " + BOOK_TABLE;
-		SQLiteDatabase db = this.getReadableDatabase();
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
 			do {
@@ -237,5 +237,9 @@ public class BookDBHelper extends DBHelper {
 		db.close();
 
 		return map;
+	}
+
+	public void close() {
+		dbHelper.close();
 	}
 }

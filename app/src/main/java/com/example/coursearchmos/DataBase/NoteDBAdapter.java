@@ -10,20 +10,22 @@ import com.example.coursearchmos.model.NoteModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoteDBHelper extends DBHelper {
+public class NoteDBAdapter {
 	public static final String NOTE_TABLE = "NOTE_TABLE";
 	public static final String COLUMN_NOTE_TITLE = "NOTE_TITLE";
 	public static final String COLUMN_NOTE_TEXT = "NOTE_TEXT";
 	public static final String COLUMN_NOTE_ID_BOOK = "NOTE_ID_BOOK";
 	public static final String COLUMN_ID = "ID";
 
+	private DBHelper dbHelper;
 
-	public NoteDBHelper(Context context) {
-		super(context);
+
+	public NoteDBAdapter(Context context) {
+		dbHelper = new DBHelper(context.getApplicationContext());
 	}
 
 	public boolean addOne(NoteModel noteModel){
-		SQLiteDatabase db = this.getWritableDatabase();
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		ContentValues cv = new ContentValues();
 
 		cv.put(COLUMN_NOTE_TITLE, noteModel.getTitle());
@@ -37,7 +39,7 @@ public class NoteDBHelper extends DBHelper {
 
 	public boolean deleteOne(NoteModel noteModel) {
 		String queryString = "DELETE FROM " + NOTE_TABLE + " WHERE " + COLUMN_ID + " = " + noteModel.getId();
-		SQLiteDatabase db = this.getWritableDatabase();
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		return cursor.moveToFirst();
 	}
@@ -46,7 +48,7 @@ public class NoteDBHelper extends DBHelper {
 		List<NoteModel> returnList = new ArrayList<>();
 
 		String queryString = "SELECT * FROM " + NOTE_TABLE;
-		SQLiteDatabase db = this.getReadableDatabase();
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
 			// loop through the cursor and create new Note object
@@ -71,7 +73,7 @@ public class NoteDBHelper extends DBHelper {
 		NoteModel noteModel = null;
 
 		String queryString = "SELECT * FROM " + NOTE_TABLE + " WHERE " + COLUMN_ID + " = " + id;
-		SQLiteDatabase db = this.getReadableDatabase();
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
 			int noteID = cursor.getInt(0);
@@ -89,7 +91,7 @@ public class NoteDBHelper extends DBHelper {
 	}
 
 	public boolean updateOne(NoteModel noteModel) {
-		SQLiteDatabase db = this.getWritableDatabase();
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		ContentValues cv = new ContentValues();
 
 		cv.put(COLUMN_ID, noteModel.getId());
@@ -106,7 +108,7 @@ public class NoteDBHelper extends DBHelper {
 		List<NoteModel> returnList = new ArrayList<>();
 
 		String queryString = "SELECT * FROM " + NOTE_TABLE + " WHERE " + COLUMN_NOTE_ID_BOOK + " = " + id;
-		SQLiteDatabase db = this.getReadableDatabase();
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
 			do {
@@ -128,7 +130,7 @@ public class NoteDBHelper extends DBHelper {
 
 	public boolean isEmpty() {
 		String queryString = "SELECT EXISTS (SELECT 1 FROM "  + NOTE_TABLE + ")";
-		SQLiteDatabase db = this.getReadableDatabase();
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		int ret = 0;
 		if (cursor.moveToFirst()){
@@ -141,4 +143,7 @@ public class NoteDBHelper extends DBHelper {
 		return ret == 0;
 	}
 
+	public void close() {
+		dbHelper.close();
+	}
 }

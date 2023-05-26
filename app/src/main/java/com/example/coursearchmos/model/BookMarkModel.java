@@ -2,12 +2,14 @@ package com.example.coursearchmos.model;
 
 public class BookMarkModel {
 	private int id;
-	private int bookId, numberPage;
+	private String title;
+	private int bookId, bookPage;
 
-	public BookMarkModel(int id, int bookId, int numberPage) {
+	public BookMarkModel(int id, int bookId, String title, int numberPage) {
 		this.id = id;
 		this.bookId = bookId;
-		this.numberPage = numberPage;
+		this.title = title;
+		this.bookPage = numberPage;
 	}
 
 	public int getId() {
@@ -26,11 +28,19 @@ public class BookMarkModel {
 		this.bookId = bookId;
 	}
 
-	public int getNumberPage() {
-		return numberPage;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setNumberPage(int numberPage) {
-		this.numberPage = numberPage;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public int getBookPage() {
+		return bookPage;
+	}
+
+	public void setBookPage(int bookPage) {
+		this.bookPage = bookPage;
 	}
 }

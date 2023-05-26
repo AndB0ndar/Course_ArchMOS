@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursearchmos.NoteActivity;
 import com.example.coursearchmos.R;
+import com.example.coursearchmos.model.BookModel;
 import com.example.coursearchmos.model.NoteModel;
 
 import java.util.List;
@@ -58,5 +59,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 			super(itemView);
 			noteTitle = itemView.findViewById(R.id.title);
 		}
+	}
+
+	public void setNotes(List<NoteModel> notes) {
+		this.notes = notes;
+		notifyDataSetChanged();
 	}
 }

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.example.coursearchmos.DataBase.BookDBHelper;
+import com.example.coursearchmos.DataBase.BookDBAdapter;
 import com.example.coursearchmos.ui.library.LibraryFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +20,7 @@ import com.example.coursearchmos.ui.setting.SettingFragment;
 
 public class MainActivity extends AppCompatActivity implements FragmentListener {
 	public static final String SELECTED_FRAGMENT = "SELECTED_FRAGMENT";
-	private BookDBHelper bookDBHelper;
+	private BookDBAdapter bookDBHelper;
 //	private NavController navController;
 	private ActivityMainBinding binding;
 
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 
 		binding = ActivityMainBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
-		bookDBHelper = new BookDBHelper(MainActivity.this);
+		bookDBHelper = new BookDBAdapter(MainActivity.this);
 
 //		AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 //				R.id.navigation_setting

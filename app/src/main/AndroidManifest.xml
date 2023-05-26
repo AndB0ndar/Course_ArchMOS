@@ -17,6 +17,10 @@
         android:theme="@style/Theme.CourseArchMOS.NoActionBar"
         tools:targetApi="33">
         <activity
+            android:name=".BookMarksActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CourseArchMOS" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main">

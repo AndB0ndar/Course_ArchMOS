@@ -9,16 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursearchmos.BookActivity;
-import com.example.coursearchmos.DataBase.BookDBHelper;
+import com.example.coursearchmos.DataBase.BookDBAdapter;
 import com.example.coursearchmos.R;
 //import com.example.coursearchmos.model.Book;
 import com.example.coursearchmos.model.BookModel;
@@ -56,12 +54,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 		holder.itemView.setOnClickListener((v) -> {
 			if (!fg_remove) {
 				Intent intent = new Intent(context, BookActivity.class);
-				intent.putExtra(BookModel.class.getCanonicalName()
+				intent.putExtra(BookActivity.BOOK_ID
 						, books.get(holder.getAdapterPosition()).getId()
 				);
 				context.startActivity(intent);
 			} else {
-				BookDBHelper bookDBHelper = new BookDBHelper(v.getContext());
+				BookDBAdapter bookDBHelper = new BookDBAdapter(v.getContext());
 				bookDBHelper.deleteOne(books.get(position));
 				books.remove(position);
 				notifyDataSetChanged();

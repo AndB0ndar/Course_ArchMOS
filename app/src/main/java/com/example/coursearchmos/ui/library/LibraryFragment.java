@@ -10,10 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.coursearchmos.DataBase.BookDBHelper;
+import com.example.coursearchmos.DataBase.BookDBAdapter;
 import com.example.coursearchmos.FragmentListener;
 import com.example.coursearchmos.adapter.BookAdapter;
 import com.example.coursearchmos.databinding.FragmentLibraryBinding;
@@ -27,7 +25,7 @@ public class LibraryFragment extends Fragment {
 	private FragmentListener fragmentListener;
 
 	protected BookAdapter bookAdapter;
-	private BookDBHelper bookDBHelper;
+	private BookDBAdapter bookDBHelper;
 	static List<BookModel> books;
 
 	private FragmentLibraryBinding binding;
@@ -52,7 +50,7 @@ public class LibraryFragment extends Fragment {
 
 		binding.btnAdd.setOnClickListener((v -> fragmentListener.openFile()));
 
-		bookDBHelper = new BookDBHelper(getContext());
+		bookDBHelper = new BookDBAdapter(getContext());
 		if (!bookDBHelper.isEmpty())
 			books = bookDBHelper.getAll();
 		else

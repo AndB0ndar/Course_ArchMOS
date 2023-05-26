@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ui.notes.NotesFragment" >
+    tools:context=".ui.bookmarks.NotesFragment" >
 
     <LinearLayout
         android:id="@+id/head"
@@ -36,8 +36,16 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="10dp"
             android:background="@color/black"/>
-
     </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/head" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRecycler"
@@ -47,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/head" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add"

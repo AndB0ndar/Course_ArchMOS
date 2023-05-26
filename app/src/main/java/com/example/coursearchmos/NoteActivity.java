@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.coursearchmos.DataBase.NoteDBHelper;
+import com.example.coursearchmos.DataBase.NoteDBAdapter;
 import com.example.coursearchmos.databinding.ActivityNoteBinding;
 import com.example.coursearchmos.model.NoteModel;
 
@@ -14,7 +14,7 @@ public class NoteActivity extends AppCompatActivity {
 	private ActivityNoteBinding binding;
 	private NoteModel noteModel;
 
-	private NoteDBHelper noteDBHelper;
+	private NoteDBAdapter noteDBHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class NoteActivity extends AppCompatActivity {
 		binding = ActivityNoteBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		noteDBHelper = new NoteDBHelper(NoteActivity.this);
+		noteDBHelper = new NoteDBAdapter(NoteActivity.this);
 
 		Bundle args = getIntent().getExtras();
 		if (args != null) {
