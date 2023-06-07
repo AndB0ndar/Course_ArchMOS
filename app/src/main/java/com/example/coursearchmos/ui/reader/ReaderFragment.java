@@ -35,7 +35,7 @@ public class ReaderFragment extends Fragment {
 
 		BookDBAdapter bookDBHelper = new BookDBAdapter(getContext());
 		if (!bookDBHelper.isEmpty()) {
-			book = bookDBHelper.getLast();
+			book = bookDBHelper.getLongest();
 			setBookRecycler();
 			binding.countPages.setMax(book.getPageCount());
 		}

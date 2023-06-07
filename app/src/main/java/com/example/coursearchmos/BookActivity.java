@@ -93,9 +93,7 @@ public class BookActivity extends AppCompatActivity {
 				startActivity(intent);
 				return true;
 			case R.id.info:
-				String text = "Название:\n" + book.getTitle()
-						+ "\nПурь:\n" + book.getPath();
-				ShowInfo(text);
+				ShowInfo(book.toString());
 				return true;
 			case R.id.add_note:
 				intent = new Intent(BookActivity.this, AddNoteActivity.class);

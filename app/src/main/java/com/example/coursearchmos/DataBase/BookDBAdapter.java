@@ -25,8 +25,10 @@ public class BookDBAdapter {
 	public static final String BOOK_TABLE = "BOOK_TABLE";
 	public static final String COLUMN_BOOK_PATH = "BOOK_PATH";
 	public static final String COLUMN_BOOK_INFO = "BOOK_INFO";
-	public static final String COLUMN_BOOK_LAST_CUR_PAGE = "BOOK_LAST_CUR_PAGE";
-	public static final String COLUMN_BOOK_PAGE_COUNT = "BOOK_LAST_PAGE_COUNT";
+	public static final String COLUMN_BOOK_LAST_CUR_PAGE
+			= "BOOK_LAST_CUR_PAGE";
+	public static final String COLUMN_BOOK_PAGE_COUNT
+			= "BOOK_LAST_PAGE_COUNT";
 	public static final String COLUMN_BOOK_TIME = "BOOK_TIME";
 	public static final String COLUMN_ID = "ID";
 
@@ -45,13 +47,15 @@ public class BookDBAdapter {
 
 		File file = new File(path);
 		if (file.exists()) {
-			Log.d("BookDBHelper", "File NOT added in BD [EXISTS]");
+			Log.d("BookDBHelper"
+					, "File NOT added in BD [EXISTS]");
 			return false;
 		}
 		try (InputStream in = context.getContentResolver().openInputStream(uri)) {
 			boolean f_create = file.createNewFile();
 			if (!f_create) {
-				Log.d("BookDBHelper", "file can't create :" + uri.getPath());
+				Log.d("BookDBHelper"
+						, "file can't create :" + uri.getPath());
 				return false;
 			}
 			try (OutputStream out = new FileOutputStream(file)) {
@@ -83,7 +87,8 @@ public class BookDBAdapter {
 
 			cv.put(COLUMN_BOOK_PATH, bookModel.getPath());
 			cv.put(COLUMN_BOOK_INFO, bookModel.getInfo());
-			cv.put(COLUMN_BOOK_LAST_CUR_PAGE, bookModel.getLastCurPage());
+			cv.put(COLUMN_BOOK_LAST_CUR_PAGE
+					, bookModel.getLastCurPage());
 			cv.put(COLUMN_BOOK_PAGE_COUNT, bookModel.getPageCount());
 			cv.put(COLUMN_BOOK_TIME, bookModel.getTime());
 
@@ -102,12 +107,16 @@ public class BookDBAdapter {
 		File file = new File(bookModel.getPath());
 		if (file.exists()) {
 			if (file.delete())
-				Log.d("BookDBHelper", "file Deleted :" + bookModel.getPath());
+				Log.d("BookDBHelper"
+						, "file Deleted :" + bookModel.getPath());
 			else
-				Log.d("BookDBHelper", "file not Deleted :" + bookModel.getPath());
+				Log.d("BookDBHelper"
+						, "file not Deleted :" + bookModel.getPath());
 		}
 
-		String queryString = "DELETE FROM " + BOOK_TABLE + " WHERE " + COLUMN_ID + " = " + bookModel.getId();
+		String queryString = "DELETE FROM " + BOOK_TABLE
+				+ " WHERE " + COLUMN_ID
+				+ " = " + bookModel.getId();
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		return cursor.moveToFirst();
@@ -124,7 +133,8 @@ public class BookDBAdapter {
 		cv.put(COLUMN_BOOK_PAGE_COUNT, bookModel.getPageCount());
 		cv.put(COLUMN_BOOK_TIME, bookModel.getTime());
 
-		int f = db.update(BOOK_TABLE, cv, "id = ?", new String[]{String.valueOf(bookModel.getId())});
+		int f = db.update(BOOK_TABLE, cv, "id = ?"
+				, new String[]{String.valueOf(bookModel.getId())});
 		db.close();
 		return f != -1;
 	}
@@ -145,7 +155,9 @@ public class BookDBAdapter {
 				int bookPageCount = cursor.getInt(4);
 				int bookTime = cursor.getInt(5);
 
-				BookModel bookModel = new BookModel(bookID, bookPATH, bookINFO, bookLCP, bookPageCount, bookTime);
+				BookModel bookModel = new BookModel(bookID, bookPATH
+						, bookINFO, bookLCP
+						, bookPageCount, bookTime);
 				returnList.add(bookModel);
 			} while (cursor.moveToNext());
 		}
@@ -159,7 +171,8 @@ public class BookDBAdapter {
 	public BookModel getById(int id) {
 		BookModel bookModel = null;
 
-		String queryString = "SELECT * FROM " + BOOK_TABLE + " WHERE " + COLUMN_ID + " = " + id;
+		String queryString = "SELECT * FROM " + BOOK_TABLE
+				+ " WHERE " + COLUMN_ID + " = " + id;
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
@@ -170,7 +183,9 @@ public class BookDBAdapter {
 			int bookPageCount = cursor.getInt(4);
 			int bookTime = cursor.getInt(5);
 
-			bookModel = new BookModel(bookID, bookPATH, bookINFO, bookLCP, bookPageCount, bookTime);
+			bookModel = new BookModel(bookID, bookPATH
+					, bookINFO, bookLCP
+					, bookPageCount, bookTime);
 		}
 
 		cursor.close();
@@ -179,10 +194,11 @@ public class BookDBAdapter {
 		return bookModel;
 	}
 
-	public BookModel getLast() {
+	public BookModel getLongest() {
 		BookModel bookModel = null;
 
-		String queryString = "SELECT *, max(" + COLUMN_BOOK_TIME + ") FROM " + BOOK_TABLE;
+		String queryString = "SELECT *, max(" + COLUMN_BOOK_TIME
+				+ ") FROM " + BOOK_TABLE;
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
@@ -193,7 +209,9 @@ public class BookDBAdapter {
 			int bookPageCount = cursor.getInt(4);
 			int bookTime = cursor.getInt(5);
 
-			bookModel = new BookModel(bookID, bookPATH, bookINFO, bookLCP, bookPageCount, bookTime);
+			bookModel = new BookModel(bookID, bookPATH
+					, bookINFO, bookLCP
+					, bookPageCount, bookTime);
 		}
 
 		cursor.close();
@@ -203,7 +221,8 @@ public class BookDBAdapter {
 	}
 
 	public boolean isEmpty() {
-		String queryString = "SELECT EXISTS (SELECT 1 FROM "  + BOOK_TABLE + ")";
+		String queryString = "SELECT EXISTS (SELECT 1 FROM "
+				+ BOOK_TABLE + ")";
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		int ret = 0;
@@ -220,7 +239,8 @@ public class BookDBAdapter {
 	public Map<String, Integer> getTitles() {
 		Map<String, Integer> map = new HashMap<>();
 
-		String queryString = "SELECT " + COLUMN_ID + ", " + COLUMN_BOOK_PATH + " FROM " + BOOK_TABLE;
+		String queryString = "SELECT " + COLUMN_ID + ", "
+				+ COLUMN_BOOK_PATH + " FROM " + BOOK_TABLE;
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){

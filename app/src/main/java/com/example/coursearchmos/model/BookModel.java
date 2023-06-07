@@ -9,7 +9,8 @@ public class BookModel implements Serializable {
 	private String title, path, info;
 	private int lastCurPage, pageCount, time;
 
-	public BookModel(int id, String path, String info, int lastCurPage, int pageCount, int time) {
+	public BookModel(int id, String path, String info
+			, int lastCurPage, int pageCount, int time) {
 		this.id = id;
 		String[] s = path.split("/");
 		this.title = s[s.length - 1].split("\\.")[0];
@@ -20,7 +21,9 @@ public class BookModel implements Serializable {
 		this.time = time;
 	}
 
-	public BookModel(int id, String title, String path, String info, int lastCurPage, int pageCount, int time) {
+	public BookModel(int id, String title, String path
+			, String info, int lastCurPage, int pageCount
+			, int time) {
 		this.id = id;
 		this.title = title;
 		this.path = path;
@@ -30,21 +33,14 @@ public class BookModel implements Serializable {
 		this.time = time;
 	}
 
-	public BookModel() {
-	}
-
 	@NonNull
 	@Override
 	public String toString() {
-		return "BookModel{" +
-				"id=" + id +
-				", title='" + title + '\'' +
-				", path='" + path + '\'' +
-				", info='" + info + '\'' +
-				", lastCurPage=" + lastCurPage +
-				", pageCount=" + pageCount +
-				", time=" + time +
-				'}';
+		return 	"Название: " + title + '\n' +
+				"Путь: '" + path + "' \n" +
+				"Текущая страница: " + lastCurPage + '\n' +
+				"Количество страниц: " + pageCount + '\n' +
+				"Общее время чтения: " + time + " с.";
 	}
 
 	public int getId() {
@@ -75,10 +71,6 @@ public class BookModel implements Serializable {
 		return info;
 	}
 
-	public void setInfo(String info) {
-		this.info = info;
-	}
-
 	public int getLastCurPage() {
 		return lastCurPage;
 	}
@@ -97,9 +89,5 @@ public class BookModel implements Serializable {
 
 	public int getPageCount() {
 		return pageCount;
-	}
-
-	public void setPageCount(int pageCount) {
-		this.pageCount = pageCount;
 	}
 }

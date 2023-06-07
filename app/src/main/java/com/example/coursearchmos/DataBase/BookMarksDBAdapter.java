@@ -15,7 +15,8 @@ public class BookMarksDBAdapter {
 	public static final String COLUMN_ID = "ID";
 	public static final String COLUMN_ID_BOOK = "BOOKMARKS_ID_BOOK";
 	public static final String COLUMN_TITLE = "BOOKMARKS_TITLE";
-	public static final String COLUMN_NUMBER_PAGE = "BOOKMARKS_NUMBER_PAGE";
+	public static final String COLUMN_NUMBER_PAGE
+			= "BOOKMARKS_NUMBER_PAGE";
 
 	private final DBHelper dbHelper;
 
@@ -37,7 +38,8 @@ public class BookMarksDBAdapter {
 	}
 
 	public boolean deleteOne(BookMarkModel bookMarkModel) {
-		String queryString = "DELETE FROM " + BOOKMARKS_TABLE + " WHERE " + COLUMN_ID + " = " + bookMarkModel.getId();
+		String queryString = "DELETE FROM " + BOOKMARKS_TABLE
+				+ " WHERE " + COLUMN_ID + " = " + bookMarkModel.getId();
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		return cursor.moveToFirst();
@@ -46,7 +48,8 @@ public class BookMarksDBAdapter {
 	public List<BookMarkModel> getAllByBookId(int id) {
 		List<BookMarkModel> returnList = new ArrayList<>();
 
-		String queryString = "SELECT * FROM " + BOOKMARKS_TABLE + " WHERE " + COLUMN_ID_BOOK + " = " + id;
+		String queryString = "SELECT * FROM " + BOOKMARKS_TABLE
+				+ " WHERE " + COLUMN_ID_BOOK + " = " + id;
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
@@ -56,7 +59,8 @@ public class BookMarksDBAdapter {
 				String bmTitle = cursor.getString(2);
 				int bmNmPage = cursor.getInt(3);
 
-				returnList.add(new BookMarkModel(bmID, bmBookID, bmTitle, bmNmPage));
+				returnList.add(new BookMarkModel(bmID, bmBookID
+						, bmTitle, bmNmPage));
 			} while (cursor.moveToNext());
 		}
 

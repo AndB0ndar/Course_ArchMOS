@@ -5,23 +5,13 @@ import java.io.Serializable;
 public class NoteModel implements Serializable {
 	private int id;
 	private String title, text;
-	private int idBook;
-
-	public NoteModel(int id, String title, String text) {
-		this.id = id;
-		this.title = title;
-		this.text = text;
-		this.idBook = -1;
-	}
+	private final int idBook;
 
 	public NoteModel(int id, String title, String text, int idBook) {
 		this.id = id;
 		this.title = title;
 		this.text = text;
 		this.idBook = idBook;
-	}
-
-	public NoteModel() {
 	}
 
 	@Override
@@ -60,9 +50,5 @@ public class NoteModel implements Serializable {
 
 	public int getIdBook() {
 		return idBook;
-	}
-
-	public void setIdBook(int idBook) {
-		this.idBook = idBook;
 	}
 }

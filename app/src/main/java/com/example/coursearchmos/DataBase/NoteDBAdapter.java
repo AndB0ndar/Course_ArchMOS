@@ -38,7 +38,8 @@ public class NoteDBAdapter {
 	}
 
 	public boolean deleteOne(NoteModel noteModel) {
-		String queryString = "DELETE FROM " + NOTE_TABLE + " WHERE " + COLUMN_ID + " = " + noteModel.getId();
+		String queryString = "DELETE FROM " + NOTE_TABLE
+				+ " WHERE " + COLUMN_ID + " = " + noteModel.getId();
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		return cursor.moveToFirst();
@@ -58,7 +59,8 @@ public class NoteDBAdapter {
 				String noteTEXT = cursor.getString(2);
 				int bookID = cursor.getInt(3);
 
-				NoteModel noteModel = new NoteModel(noteID, noteTITLE, noteTEXT, bookID);
+				NoteModel noteModel = new NoteModel(noteID, noteTITLE
+						, noteTEXT, bookID);
 				returnList.add(noteModel);
 			} while (cursor.moveToNext());
 		}
@@ -72,7 +74,8 @@ public class NoteDBAdapter {
 	public NoteModel getById(int id) {
 		NoteModel noteModel = null;
 
-		String queryString = "SELECT * FROM " + NOTE_TABLE + " WHERE " + COLUMN_ID + " = " + id;
+		String queryString = "SELECT * FROM " + NOTE_TABLE
+				+ " WHERE " + COLUMN_ID + " = " + id;
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
@@ -99,7 +102,9 @@ public class NoteDBAdapter {
 		cv.put(COLUMN_NOTE_TEXT, noteModel.getText());
 		cv.put(COLUMN_NOTE_ID_BOOK, noteModel.getIdBook());
 
-		db.update(NOTE_TABLE, cv, "id = ?", new String[]{String.valueOf(noteModel.getId())});
+		db.update(NOTE_TABLE, cv, "id = ?"
+				, new String[]{String.valueOf(noteModel.getId())}
+		);
 		db.close();
 		return true;
 	}
@@ -107,7 +112,8 @@ public class NoteDBAdapter {
 	public List<NoteModel> getAllByBook(int id) {
 		List<NoteModel> returnList = new ArrayList<>();
 
-		String queryString = "SELECT * FROM " + NOTE_TABLE + " WHERE " + COLUMN_NOTE_ID_BOOK + " = " + id;
+		String queryString = "SELECT * FROM " + NOTE_TABLE
+				+ " WHERE " + COLUMN_NOTE_ID_BOOK + " = " + id;
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		if (cursor.moveToFirst()){
@@ -117,7 +123,8 @@ public class NoteDBAdapter {
 				String noteTEXT = cursor.getString(2);
 				int bookID = cursor.getInt(3);
 
-				NoteModel noteModel = new NoteModel(noteID, noteTITLE, noteTEXT, bookID);
+				NoteModel noteModel = new NoteModel(noteID, noteTITLE
+						, noteTEXT, bookID);
 				returnList.add(noteModel);
 			} while (cursor.moveToNext());
 		}
@@ -129,7 +136,8 @@ public class NoteDBAdapter {
 	}
 
 	public boolean isEmpty() {
-		String queryString = "SELECT EXISTS (SELECT 1 FROM "  + NOTE_TABLE + ")";
+		String queryString = "SELECT EXISTS (SELECT 1 FROM "
+				+ NOTE_TABLE + ")";
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(queryString, null);
 		int ret = 0;
