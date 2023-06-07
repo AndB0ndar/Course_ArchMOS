@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.coursearchmos.DataBase.BookDBAdapter;
+import com.example.coursearchmos.DataBase.UserDBAdapter;
+import com.example.coursearchmos.model.UserModel;
 import com.example.coursearchmos.ui.library.LibraryFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +20,12 @@ import com.example.coursearchmos.ui.notes.NotesFragment;
 import com.example.coursearchmos.ui.reader.ReaderFragment;
 import com.example.coursearchmos.ui.setting.SettingFragment;
 
-public class MainActivity extends AppCompatActivity implements FragmentListener {
+public class MainActivity extends AppCompatActivity implements MainFragmentListener {
 	public static final String SELECTED_FRAGMENT = "SELECTED_FRAGMENT";
+	public static final String FLAG_IS_CHILD = "IS_CHILD";
 	private BookDBAdapter bookDBHelper;
-//	private NavController navController;
 	private ActivityMainBinding binding;
+	private boolean userIsChild;
 
 
 	@Override
@@ -33,17 +36,6 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 		setContentView(binding.getRoot());
 		bookDBHelper = new BookDBAdapter(MainActivity.this);
 
-//		AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-//				R.id.navigation_setting
-//				, R.id.navigation_reader
-//				, R.id.navigation_library
-//				, R.id.navigation_notes
-//		).build();
-//		navController = Navigation.findNavController(MainActivity.this
-//				, R.id.nav_host_fragment_activity_main
-//		);
-//		NavigationUI.setupWithNavController(binding.navView, navController);
-
 		binding.navView.setOnItemSelectedListener((item) ->{
 			switch (item.getItemId()) {
 				case R.id.navigation_setting:
@@ -53,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 					replaceFragment(new ReaderFragment());
 					break;
 				case R.id.navigation_library:
-					replaceFragment(new LibraryFragment());
+					replaceFragment(LibraryFragment.newInstance(userIsChild));
 					break;
 				case R.id.navigation_notes:
 					replaceFragment(new NotesFragment());
@@ -64,7 +56,10 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
 
 		binding.navView.getMenu().setGroupCheckable(0, false, true);
 		Bundle args = getIntent().getExtras();
-		if (args != null)
+		if (args.containsKey(Authorization.USER_ID)) {
+			userIsChild = args.getBoolean(Authorization.USER_ID);
+		}
+		if (args.containsKey(MainActivity.SELECTED_FRAGMENT))
 			selectFragment(args.getString(MainActivity.SELECTED_FRAGMENT));
 		else
 			replaceFragment(new ReaderFragment());

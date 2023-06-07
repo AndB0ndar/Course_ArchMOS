@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursearchmos.DataBase.BookDBAdapter;
 import com.example.coursearchmos.DataBase.NoteDBAdapter;
-import com.example.coursearchmos.FragmentListener;
+import com.example.coursearchmos.MainFragmentListener;
 import com.example.coursearchmos.adapter.NoteAdapter;
 import com.example.coursearchmos.databinding.FragmentNotesBinding;
 import com.example.coursearchmos.model.NoteModel;
@@ -27,7 +27,7 @@ import java.util.List;
 
 public class NotesFragment extends Fragment {
 	private FragmentNotesBinding binding;
-	private FragmentListener fragmentListener;
+	private MainFragmentListener fragmentListener;
 
 	protected NoteAdapter noteAdapter;
 	private NoteDBAdapter noteDBHelper;
@@ -40,7 +40,7 @@ public class NotesFragment extends Fragment {
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		try {
-			fragmentListener = (FragmentListener) context;
+			fragmentListener = (MainFragmentListener) context;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(context.toString());
 		}

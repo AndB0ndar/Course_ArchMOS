@@ -12,7 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.coursearchmos.DataBase.BookDBAdapter;
-import com.example.coursearchmos.FragmentListener;
+import com.example.coursearchmos.MainActivity;
+import com.example.coursearchmos.MainFragmentListener;
 import com.example.coursearchmos.adapter.BookAdapter;
 import com.example.coursearchmos.databinding.FragmentLibraryBinding;
 import com.example.coursearchmos.model.BookModel;
@@ -22,32 +23,49 @@ import java.util.List;
 
 public class LibraryFragment extends Fragment {
 	public static final int PICK_PDF_FILE = 2;
-	private FragmentListener fragmentListener;
+	public static final String FLAG_IS_CHILD = "com.example.coursearchmos.ui.library FLAG_IS_CHILD";
+	private MainFragmentListener fragmentListener;
 
 	protected BookAdapter bookAdapter;
 	private BookDBAdapter bookDBHelper;
 	static List<BookModel> books;
 
 	private FragmentLibraryBinding binding;
+	private boolean f_child;
 
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		try {
-			fragmentListener = (FragmentListener) context;
+			fragmentListener = (MainFragmentListener) context;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(context.toString());
 		}
 	}
 
+	public static LibraryFragment newInstance(Boolean isChild) {
+		LibraryFragment fragment = new LibraryFragment();
+		Bundle args = new Bundle();
+		args.putBoolean(FLAG_IS_CHILD, isChild);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (getArguments() != null)
+			f_child = getArguments().getBoolean(FLAG_IS_CHILD);
+	}
+
+
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 ViewGroup container, Bundle savedInstanceState) {
-		LibraryViewModel libraryViewModel =
-				new ViewModelProvider(this).get(LibraryViewModel.class);
-
 		binding = FragmentLibraryBinding.inflate(inflater, container, false);
 		View root = binding.getRoot();
 
+		binding.btnAdd.setVisibility(f_child ? View.INVISIBLE : View.VISIBLE);
+		binding.btnRemove.setVisibility(f_child ? View.INVISIBLE : View.VISIBLE);
 		binding.btnAdd.setOnClickListener((v -> fragmentListener.openFile()));
 
 		bookDBHelper = new BookDBAdapter(getContext());

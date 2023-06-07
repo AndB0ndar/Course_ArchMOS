@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">CourseArchMOS</string>
+    <string name="title_activity_main">Читалка</string>
     <string name="title_activity_reader">Reader</string>
 
     <string name="title_setting">Настройки</string>
@@ -10,30 +11,7 @@
     <string name="display_label">Дисплей</string>
     <string name="light_label">Яркость</string>
     <string name="notes_test">note</string>
-    <string name="title_activity_tmp">tmp</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="title_activity_settings2">SettingsActivity2</string>
 
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="title_activity_main">MainActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="et_note_title">Заголовок</string>
     <string name="et_note_text">Остновной текст</string>
     <string name="bt_save">Сохранить</string>
@@ -45,4 +23,16 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_bookmakrs">Закладки</string>
     <string name="btn_add">Добавить</string>
+    <string name="register_title">Добро пожаловать</string>
+    <string name="login">логин</string>
+    <string name="password">пароль</string>
+
+    <string name="title">Привет!</string>
+    <string name="enter">ввод</string>
+    <string name="registration">Register</string>
+    <string name="repeat_password">повторите пароль</string>
+    <string name="register">зарегистрировать</string>
+    <string name="incorrect_data">Некорректные данные</string>
+    <string name="password_mismatch">Пароль не существует</string>
+    <string name="different_login">Укажите другой логин</string>
 </resources>

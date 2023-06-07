@@ -1,7 +1,7 @@
 package com.example.coursearchmos;
 
 
-public interface FragmentListener {
+public interface MainFragmentListener {
 	void openFile();
 	void addNote();
 }

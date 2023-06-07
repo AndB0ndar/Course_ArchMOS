@@ -33,6 +33,13 @@ class DBHelper extends SQLiteOpenHelper {
 					+ BookMarksDBAdapter.COLUMN_TITLE + " TEXT, "
 					+ BookMarksDBAdapter.COLUMN_NUMBER_PAGE
 						+ " INTEGER)";
+	private static final String CREATE_TABLE_USER =
+			"CREATE TABLE " + UserDBAdapter.USER_TABLE
+					+ " (" + UserDBAdapter.COLUMN_ID
+					+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+					+ UserDBAdapter.COLUMN_USER_NAME + " TEXT, "
+					+ UserDBAdapter.COLUMN_USER_HASH + " INTEGER, "
+					+ UserDBAdapter.COLUMN_USER_F_IS_CHILD + " INTEGER)";
 
 
 	public DBHelper(Context context) {
@@ -44,6 +51,7 @@ class DBHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE_NOTES);
 		db.execSQL(CREATE_TABLE_BOOKS);
 		db.execSQL(CREATE_TABLE_BOOKMARK);
+		db.execSQL(CREATE_TABLE_USER);
 	}
 
 	@Override
